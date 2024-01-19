@@ -10,5 +10,18 @@ void main() {
   Flame.device.setPortraitUpOnly();
 
   SocketShowdown game = SocketShowdown();
-  runApp(GameWidget(game: kDebugMode ? SocketShowdown() : game));
+  runApp(GameWidget(
+    game: kDebugMode ? SocketShowdown() : game,
+    backgroundBuilder: (context) {
+      return Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+            colors: [Color(0xFF267892), Color(0xFFFFFFFF)],
+          ),
+        ),
+      );
+    },
+  ));
 }
