@@ -13,6 +13,7 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   flame: ^1.14.0
+  flame_forge2d: ^0.16.0+4
 
 dev_dependencies:
   flutter_test:
