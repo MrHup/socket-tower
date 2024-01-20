@@ -1,4 +1,5 @@
 import 'package:flame/components.dart';
+import 'package:flame/image_composition.dart';
 import 'package:socket_showdown/components/falling_box.dart';
 import 'package:socket_showdown/static/constants.dart';
 
@@ -12,18 +13,30 @@ class MyPlayer extends FallingBox {
         );
 
   @override
+  void render(Canvas c) {
+    if (Constants.SHOW_COLLISION_BOX) {
+      super.renderDebugMode(c);
+    }
+    super.render(c);
+  }
+
+  @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
     acceleration = 0;
-    // remove collider
-    remove(hitbox);
+    if (hitbox.parent != null) {
+      remove(hitbox);
+    }
     isFalling = false;
   }
 
+  @override
   void resetPosition() {
     position = startingPosition;
     acceleration = Constants.CUBE_WEIGHT * 0.01;
     isFalling = true;
     add(hitbox);
+
+    super.resetPosition();
   }
 }

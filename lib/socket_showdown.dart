@@ -1,12 +1,8 @@
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flame_rive/flame_rive.dart';
-import 'package:socket_showdown/components/animation_template.dart';
 import 'package:socket_showdown/components/bottom_decoration.dart';
 import 'package:socket_showdown/components/player.dart';
 import 'package:socket_showdown/utils.dart/logger.dart';
-
-import 'package:rive/rive.dart';
 
 // main game loop will be designed here
 // Structure ----
@@ -34,10 +30,6 @@ class SocketShowdown extends FlameGame
 
     player = MyPlayer(startingPosition: Vector2(size.x / 2, 20));
     await add(player);
-
-    final skillsArtboard = await loadArtboard(
-        RiveFile.asset('assets/animations/landanimation.riv'));
-    add(SkillsAnimationComponent(skillsArtboard));
   }
 
   @override

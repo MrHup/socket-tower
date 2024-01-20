@@ -1,23 +1,24 @@
+import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flame/game.dart';
 import 'package:flame_rive/flame_rive.dart';
 
 class SkillsAnimationComponent extends RiveComponent with TapCallbacks {
   SkillsAnimationComponent(Artboard artboard) : super(artboard: artboard);
-
-  SMIInput<double>? _levelInput;
+  // SMIInput<double>? _levelInput;
 
   @override
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
-    this.size = size;
+    anchor = Anchor.center;
+    // scale = Vector2(0.5, 0.5);
   }
 
   @override
   void onLoad() {
+    print("Loaded");
     final controller = StateMachineController.fromArtboard(
       artboard,
-      "State Machine 1",
+      "State Machine 2",
     );
     if (controller != null) {
       artboard.addController(controller);
@@ -25,13 +26,4 @@ class SkillsAnimationComponent extends RiveComponent with TapCallbacks {
       // _levelInput?.value = 0;
     }
   }
-
-  // @override
-  // void onTapDown(TapDownEvent event) {
-  //   final levelInput = _levelInput;
-  //   if (levelInput == null) {
-  //     return;
-  //   }
-  //   levelInput.value = (levelInput.value + 1) % 3;
-  // }
 }

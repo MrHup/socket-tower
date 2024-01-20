@@ -1,6 +1,9 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_rive/flame_rive.dart';
 import 'package:flutter/material.dart';
+import 'package:socket_showdown/components/animation_template.dart';
+import 'package:socket_showdown/components/player.dart';
 import 'package:socket_showdown/static/constants.dart';
 
 class FallingBox extends SpriteComponent with CollisionCallbacks {
@@ -28,8 +31,17 @@ class FallingBox extends SpriteComponent with CollisionCallbacks {
   static const double CUBE_WEIGHT = Constants.CUBE_WEIGHT;
   double acceleration = CUBE_WEIGHT * 0.01;
 
+  // tocuh effects animation
+  late SkillsAnimationComponent skillsAnimationComponent;
+  late Artboard skillsArtboard;
+
   @override
   Future<void> onLoad() async {
+    // load touch down effects
+    skillsArtboard = await loadArtboard(
+        RiveFile.asset('assets/animations/landanimation.riv'));
+    skillsAnimationComponent = SkillsAnimationComponent(skillsArtboard);
+
     sprite = await Sprite.load(imgPath);
     position = startingPosition;
     anchor = customAnchor;
@@ -57,5 +69,24 @@ class FallingBox extends SpriteComponent with CollisionCallbacks {
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
+
+    // type cast to FallingBox
+    final otherFallingBox = other as FallingBox;
+    otherFallingBox.spawnTouchDownEffects();
+  }
+
+  void resetPosition() {
+    if (skillsAnimationComponent.parent != null) {
+      print("remove skillsAnimationComponent for $this");
+      remove(skillsAnimationComponent);
+    }
+  }
+
+  void spawnTouchDownEffects() {
+    if (this is MyPlayer) return;
+    print("spawnTouchDownEffects for $this");
+    skillsAnimationComponent = SkillsAnimationComponent(skillsArtboard);
+    add(skillsAnimationComponent);
+    skillsAnimationComponent.position = Vector2(size.x / 2, size.y / 4);
   }
 }
