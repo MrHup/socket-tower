@@ -31,6 +31,8 @@ flutter:
     - assets/images/player.png
     - assets/images/ground.png
     - assets/animations/landanimation.riv
+    - assets/images/crane_base.png
+    - assets/images/crane_body.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -3,7 +3,6 @@ import 'package:flame/components.dart';
 import 'package:flame_rive/flame_rive.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_showdown/components/animation_template.dart';
-import 'package:socket_showdown/components/player.dart';
 import 'package:socket_showdown/static/constants.dart';
 
 class FallingBox extends SpriteComponent with CollisionCallbacks {
@@ -23,7 +22,7 @@ class FallingBox extends SpriteComponent with CollisionCallbacks {
   Vector2 positionCollisionBox;
   bool isFalling;
 
-  final _defaultColor = Color.fromARGB(136, 115, 255, 0);
+  final _defaultColor = Color.fromARGB(135, 255, 86, 86);
   late ShapeHitbox hitbox;
 
   // gravity and acceleration
@@ -54,6 +53,10 @@ class FallingBox extends SpriteComponent with CollisionCallbacks {
       ..paint = defaultPaint
       ..renderShape = Constants.SHOW_COLLISION_BOX;
 
+    if (isFalling == false) {
+      hitbox.collisionType = CollisionType.passive;
+    }
+
     add(hitbox);
   }
 
@@ -68,11 +71,9 @@ class FallingBox extends SpriteComponent with CollisionCallbacks {
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    super.onCollision(intersectionPoints, other);
-
-    // type cast to FallingBox
     final otherFallingBox = other as FallingBox;
     otherFallingBox.spawnTouchDownEffects();
+    super.onCollision(intersectionPoints, other);
   }
 
   void resetPosition() {
@@ -83,7 +84,8 @@ class FallingBox extends SpriteComponent with CollisionCallbacks {
   }
 
   void spawnTouchDownEffects() {
-    if (this is MyPlayer) return;
+    // if (this is MyPlayer) return;
+    if (hitbox.collisionType == CollisionType.active) return;
     print("spawnTouchDownEffects for $this");
     skillsAnimationComponent = SkillsAnimationComponent(skillsArtboard);
     add(skillsAnimationComponent);

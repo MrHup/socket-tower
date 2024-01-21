@@ -1,8 +1,9 @@
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:socket_showdown/components/bottom_decoration.dart';
+import 'package:socket_showdown/components/crane/cable.dart';
 import 'package:socket_showdown/components/player.dart';
-import 'package:socket_showdown/utils.dart/logger.dart';
+import 'package:socket_showdown/utils/logger.dart';
 
 // main game loop will be designed here
 // Structure ----
@@ -30,13 +31,18 @@ class SocketShowdown extends FlameGame
 
     player = MyPlayer(startingPosition: Vector2(size.x / 2, 20));
     await add(player);
+
+    final crane = CraneCable(Vector2(size.x / 2, 0), screenWidth: size.x);
+    await add(crane);
   }
 
   @override
   void onTapDown(TapDownEvent event) {
     debugLog("Tap down at ${event.localPosition}");
-    paused = !paused;
-    player.resetPosition();
+    // paused = !paused;
+    // player.resetPosition();
+    player = MyPlayer(startingPosition: Vector2(size.x / 2, 20));
+    add(player);
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/image_composition.dart';
 import 'package:socket_showdown/components/falling_box.dart';
@@ -25,7 +26,7 @@ class MyPlayer extends FallingBox {
     super.onCollision(intersectionPoints, other);
     acceleration = 0;
     if (hitbox.parent != null) {
-      remove(hitbox);
+      hitbox.collisionType = CollisionType.passive;
     }
     isFalling = false;
   }
