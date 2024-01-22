@@ -6,8 +6,8 @@ class BottomDecoration extends FallingBox {
       : super(
           imgPath: 'ground.png',
           startingPosition: startingPosition,
-          collisionBox: Vector2(423, 50),
-          positionCollisionBox: Vector2(0, 125),
+          collisionBox: Vector2(423, 240),
+          positionCollisionBox: Vector2(80, 120),
           isFalling: false,
           customAnchor: Anchor.bottomCenter,
         );

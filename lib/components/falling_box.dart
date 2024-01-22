@@ -49,7 +49,17 @@ class FallingBox extends SpriteComponent with CollisionCallbacks {
       ..color = _defaultColor
       ..style = PaintingStyle.fill;
 
-    hitbox = RectangleHitbox(size: collisionBox, position: positionCollisionBox)
+    // make parallelogram hitbox
+    Vector2 startingPos = positionCollisionBox;
+    Vector2 startingSize = collisionBox ?? sprite!.srcSize;
+
+    hitbox = PolygonHitbox([
+      startingPos,
+      startingPos + Vector2(startingSize.x / 2, startingSize.y / 2),
+      startingPos +
+          Vector2(startingSize.x / 2, startingSize.y + startingSize.y / 2),
+      startingPos + Vector2(0, startingSize.y),
+    ])
       ..paint = defaultPaint
       ..renderShape = Constants.SHOW_COLLISION_BOX;
 
