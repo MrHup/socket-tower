@@ -1,7 +1,7 @@
-import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/image_composition.dart';
 import 'package:socket_showdown/components/falling_box.dart';
+import 'package:socket_showdown/components/player_stack.dart';
 import 'package:socket_showdown/static/constants.dart';
 
 class MyPlayer extends FallingBox {
@@ -25,10 +25,15 @@ class MyPlayer extends FallingBox {
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
     acceleration = 0;
-    if (hitbox.parent != null) {
-      hitbox.collisionType = CollisionType.passive;
-    }
     isFalling = false;
+
+    print("onCollision with $other");
+
+    if (other.parent is PlayerStack) {
+      setToPassive();
+      position = absolutePosition;
+      parent = other.parent;
+    }
   }
 
   @override

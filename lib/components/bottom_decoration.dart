@@ -11,4 +11,10 @@ class BottomDecoration extends FallingBox {
           isFalling: false,
           customAnchor: Anchor.bottomCenter,
         );
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    setToPassive();
+  }
 }
