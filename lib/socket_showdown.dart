@@ -1,6 +1,7 @@
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:socket_showdown/components/block_deleter.dart';
 import 'package:socket_showdown/components/bottom_decoration.dart';
 import 'package:socket_showdown/components/crane/cable.dart';
 import 'package:socket_showdown/components/player.dart';
@@ -22,6 +23,10 @@ class SocketShowdown extends FlameGame
     playerStackComponent.players.add(bottomDecoration);
 
     crane = CraneCable(Vector2(size.x / 2, 0), screenWidth: size.x);
+
+    add(BlockDeleter(
+        collisionBoxPosition: Vector2(0, size.y),
+        collisionBoxSize: Vector2(size.x, 100)));
   }
 
   @override
@@ -37,7 +42,6 @@ class SocketShowdown extends FlameGame
       print("spawn");
       crane.spawnBox();
     }
-
     // bottomDecoration.position = bottomDecoration.position + Vector2(0, 20);
   }
 

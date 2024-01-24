@@ -23,11 +23,14 @@ class CraneCable extends SpriteComponent {
   Future<void> onLoad() async {
     sprite = await Sprite.load("crane_body.png");
     anchor = Anchor.topCenter;
-    position = startingPosition + offset;
+    position = startingPosition - Vector2(0, absoluteScaledSize.y / 2);
 
-    player = MyPlayer(startingPosition: Vector2(0, scaledSize.y));
+    player = MyPlayer(
+        startingPosition:
+            Vector2(absoluteScaledSize.x / 2, absoluteScaledSize.y));
     player.isFalling = false;
     player.parent = this;
+    player.anchor = Anchor.topLeft;
 
     // final craneTop = CraneTop(Vector2(size.x / 2, 0) - offset + Vector2(0, 40));
     // add(craneTop);
@@ -69,7 +72,9 @@ class CraneCable extends SpriteComponent {
 
   void spawnBox() {
     enabled = true;
-    player = MyPlayer(startingPosition: Vector2(0, scaledSize.y));
+    player = MyPlayer(
+        startingPosition:
+            Vector2(absoluteScaledSize.x / 2, absoluteScaledSize.y));
     player.isFalling = false;
     player.parent = this;
   }
