@@ -28,9 +28,7 @@ class SocketShowdown extends FlameGame
   void onTapDown(TapDownEvent event) {
     debugLog("Tap down at ${event.localPosition}");
     // paused = !paused;
-    // player = MyPlayer(
-    //     startingPosition: crane.position + Vector2(0, crane.scaledSize.y));
-    // playerStackComponent.players.add(player);
+    paused = false;
 
     if (crane.enabled == true) {
       print("drop");

@@ -1,5 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:socket_showdown/components/player.dart';
+import 'package:socket_showdown/socket_showdown.dart';
 // import 'package:socket_showdown/components/crane/top_piece.dart';
 
 class CraneCable extends SpriteComponent {
@@ -50,7 +51,7 @@ class CraneCable extends SpriteComponent {
     double newX = position.x + direction * easedTime * speed * dt;
 
     // Calculate the corresponding y-coordinate based on isometric linear equation
-    double newY = 0.575 * newX - 450;
+    double newY = 0.575 * newX - 300;
     position = Vector2(newX, newY);
   }
 
@@ -61,11 +62,8 @@ class CraneCable extends SpriteComponent {
   void dropBox() {
     enabled = false;
     player.isFalling = true;
-    print("Old parent is ${player.parent}");
-    print(player.hitbox.collisionType);
-    player.parent = parent;
-
-    print("New parent is ${player.parent}");
+    player.parent = (parent as SocketShowdown).playerStackComponent;
+    (parent as SocketShowdown).playerStackComponent.players.add(player);
     player.position = absolutePosition + Vector2(0, scaledSize.y);
   }
 

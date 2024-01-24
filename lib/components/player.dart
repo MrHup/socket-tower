@@ -32,7 +32,8 @@ class MyPlayer extends FallingBox {
     if (other.parent is PlayerStack) {
       setToPassive();
       position = absolutePosition;
-      parent = other.parent;
+      // parent = other.parent;
+      // (other.parent as PlayerStack).players.add(this);
     }
   }
 

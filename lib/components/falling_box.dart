@@ -26,6 +26,9 @@ class FallingBox extends SpriteComponent with CollisionCallbacks {
   final _defaultColor = Color.fromARGB(135, 255, 86, 86);
   late ShapeHitbox hitbox;
 
+  int id = 0;
+  static int BOX_COUNT = 0;
+
   // gravity and acceleration
   static const double SPEED = Constants.SPEED;
   static const double CUBE_WEIGHT = Constants.CUBE_WEIGHT;
@@ -37,6 +40,7 @@ class FallingBox extends SpriteComponent with CollisionCallbacks {
 
   @override
   Future<void> onLoad() async {
+    id = BOX_COUNT++;
     // load touch down effects
     skillsArtboard = await loadArtboard(
         RiveFile.asset('assets/animations/landanimation.riv'));
