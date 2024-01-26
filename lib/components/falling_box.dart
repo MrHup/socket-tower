@@ -3,7 +3,7 @@ import 'package:flame/components.dart';
 import 'package:flame_rive/flame_rive.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_showdown/components/animation_template.dart';
-import 'package:socket_showdown/components/player_stack.dart';
+import 'package:socket_showdown/components/block_deleter.dart';
 import 'package:socket_showdown/static/constants.dart';
 
 class FallingBox extends SpriteComponent with CollisionCallbacks {
@@ -82,7 +82,7 @@ class FallingBox extends SpriteComponent with CollisionCallbacks {
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    spawnTouchDownEffects();
+    spawnTouchDownEffects(other);
     super.onCollision(intersectionPoints, other);
   }
 
@@ -97,9 +97,9 @@ class FallingBox extends SpriteComponent with CollisionCallbacks {
     hitbox.collisionType = CollisionType.passive;
   }
 
-  void spawnTouchDownEffects() {
-    if (parent is PlayerStack) return;
-    // if (hitbox.collisionType == CollisionType.active) return;
+  void spawnTouchDownEffects(PositionComponent other) {
+    if (hitbox.collisionType == CollisionType.active || other is BlockDeleter)
+      return;
     print("spawnTouchDownEffects for $this");
     skillsAnimationComponent = SkillsAnimationComponent(skillsArtboard);
     add(skillsAnimationComponent);

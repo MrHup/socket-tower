@@ -1,8 +1,10 @@
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/image_composition.dart';
 import 'package:socket_showdown/components/block_deleter.dart';
 import 'package:socket_showdown/components/falling_box.dart';
 import 'package:socket_showdown/components/player_stack.dart';
+import 'package:socket_showdown/socket_showdown.dart';
 import 'package:socket_showdown/static/constants.dart';
 
 class MyPlayer extends FallingBox {
@@ -28,16 +30,17 @@ class MyPlayer extends FallingBox {
     acceleration = 0;
     isFalling = false;
 
-    print("onCollision with $other");
-
-    if (other is BlockDeleter) {
-      (parent as PlayerStack).players.remove(this);
-      parent?.remove(this);
+    // print("onCollision with $other");
+    if (hitbox.collisionType == CollisionType.active && other is BlockDeleter) {
+      (parent!.parent as SocketShowdown).resetGame();
+      removeFromParent();
     }
 
-    if (other.parent is PlayerStack) {
+    if (hitbox.collisionType == CollisionType.active &&
+        other.parent is PlayerStack) {
       setToPassive();
       position = absolutePosition;
+      (parent!.parent as SocketShowdown).givePoint();
     }
   }
 
