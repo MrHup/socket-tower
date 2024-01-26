@@ -58,10 +58,11 @@ class SocketShowdown extends FlameGame
       });
     }
     if (lowerByValue < 0) {
-      lowerByValue += 2;
-      playerStackComponent.players.forEach((element) {
-        element.position = element.position - Vector2(0, 200 * dt);
-      });
+      bottomDecoration.position =
+          bottomDecoration.position - Vector2(0, 200 * dt);
+      if (bottomDecoration.position.y <= size.y) {
+        lowerByValue = 0;
+      }
     }
   }
 
