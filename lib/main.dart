@@ -13,6 +13,20 @@ void main() {
   SocketShowdown game = SocketShowdown();
   runApp(GameWidget(
     game: kDebugMode ? SocketShowdown() : game,
+    // overlayBuilderMap: kDebugMode ? game.overlayBuilderMap : null,
+    overlayBuilderMap: {
+      "fog": (BuildContext context, SocketShowdown game) {
+        return Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment(0, 1),
+              end: Alignment(0, 0.7),
+              colors: [Color(0xFF555f75), Color(0x00555f75)],
+            ),
+          ),
+        );
+      },
+    },
     backgroundBuilder: (context) {
       return Stack(
         children: [

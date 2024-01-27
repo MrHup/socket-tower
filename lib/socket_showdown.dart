@@ -6,6 +6,7 @@ import 'package:socket_showdown/components/bottom_decoration.dart';
 import 'package:socket_showdown/components/crane/cable.dart';
 import 'package:socket_showdown/components/player.dart';
 import 'package:socket_showdown/components/player_stack.dart';
+import 'package:socket_showdown/components/score_board.dart';
 import 'package:socket_showdown/static/game_state.dart';
 import 'package:socket_showdown/utils/logger.dart';
 
@@ -15,6 +16,7 @@ class SocketShowdown extends FlameGame
   late CraneCable crane;
   late BottomDecoration bottomDecoration;
   late PlayerStack playerStackComponent;
+  late ScoreBoard scoreBoard;
 
   double lowerByValue = 0;
 
@@ -26,10 +28,16 @@ class SocketShowdown extends FlameGame
     playerStackComponent.players.add(bottomDecoration);
 
     crane = CraneCable(Vector2(size.x / 2, 0), screenWidth: size.x);
+    scoreBoard = ScoreBoard(
+        givenSize: Vector2(size.x / 2, size.x / 2),
+        givenPosition: Vector2(size.x / 2, size.y / 2));
+    add(scoreBoard);
 
     add(BlockDeleter(
         collisionBoxPosition: Vector2(0, size.y - 350),
         collisionBoxSize: Vector2(size.x, 100)));
+
+    // overlays.add("fog");
   }
 
   @override
@@ -95,11 +103,12 @@ class SocketShowdown extends FlameGame
     crane = CraneCable(Vector2(size.x / 2, 0), screenWidth: size.x);
 
     GameState.score = 0;
+    scoreBoard.updateScore(GameState.score);
   }
 
   void givePoint() {
     GameState.score++;
-    print(GameState.score);
+    scoreBoard.updateScore(GameState.score);
     lowerByValue += 50;
   }
 }
