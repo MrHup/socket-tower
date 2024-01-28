@@ -1,4 +1,5 @@
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_showdown/components/block_deleter.dart';
@@ -90,15 +91,22 @@ class GameLoop extends PositionComponent
   }
 
   void resetGame() {
+    add(MoveByEffect(
+      Vector2.all(2.4),
+      EffectController(
+        duration: 0.1,
+        alternate: true,
+        infinite: false,
+      ),
+    ));
+    print("Resetting game");
     for (final player in playerStackComponent.players) {
       player.removeFromParent();
     }
     playerStackComponent.players.clear();
     lowerByValue = -GameState.score * 50;
     playerStackComponent.players.add(bottomDecoration);
-    remove(crane);
-    crane = CraneCable(Vector2(size.x / 2, 0), screenWidth: size.x);
-
+    startGame();
     GameState.score = 0;
     scoreBoard.updateScore(GameState.score);
   }
@@ -107,7 +115,11 @@ class GameLoop extends PositionComponent
     GameState.score++;
     scoreBoard.updateScore(GameState.score);
     lowerByValue += 50;
+    crane.spawnBox();
+  }
 
+  void startGame() {
+    crane.resetPosition();
     crane.spawnBox();
   }
 }

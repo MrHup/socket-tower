@@ -2,6 +2,7 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:socket_showdown/screens/game_loop.dart';
 import 'package:socket_showdown/socket_showdown.dart';
 
 class MainMenuRoute extends Route {
@@ -18,6 +19,15 @@ class MainMenuRoute extends Route {
   @override
   void onPop(Route nextRoute) {
     nextRoute.resumeTime();
+    (nextRoute.firstChild() as GameLoop).startGame();
+    // nextRoute.crane.spawnBox();
+    // nextRoute.gameRef.add(
+    //   ShakeEffect(
+    //     duration: 0.5,
+    //     offset: 10,
+    //     maxAngle: 0.1,
+    //   ),
+    // );
     // ..removeRenderEffect();
   }
 }
@@ -27,20 +37,29 @@ class MainMenuPage extends Component
   @override
   Future<void> onLoad() async {
     final game = findGame()!;
-    final logo = SpriteComponent.fromImage(
-      await game.images.load('logo.png'),
-    );
-    logo.anchor = Anchor.center;
-    logo.position = game.size / 2;
+    final SpriteComponent logo = SpriteComponent(
+        sprite: await game.loadSprite('logo.png'),
+        anchor: Anchor.center,
+        position: game.size / 2,
+        children: [
+          ScaleEffect.to(
+            Vector2.all(1.1),
+            EffectController(
+              duration: 0.3,
+              alternate: true,
+              infinite: true,
+            ),
+          ),
+        ]);
     add(logo);
 
     final tapToPlay = TextComponent(
       text: 'TAP TO START',
-      position: game.canvasSize / 2 + Vector2(0, logo.size.y / 2 + 20),
+      position: game.canvasSize / 2 + Vector2(0, logo.size.y / 2 + 40),
       anchor: Anchor.center,
       children: [
-        ScaleEffect.to(
-          Vector2.all(1.1),
+        RotateEffect.to(
+          0.1,
           EffectController(
             duration: 0.3,
             alternate: true,

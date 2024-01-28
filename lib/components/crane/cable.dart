@@ -16,7 +16,7 @@ class CraneCable extends SpriteComponent {
   int direction = 1; // 1 for moving down, -1 for moving up
   double easeTime = 0;
 
-  bool enabled = true;
+  bool enabled = false;
   late MyPlayer player;
 
   @override
@@ -25,12 +25,12 @@ class CraneCable extends SpriteComponent {
     anchor = Anchor.topCenter;
     position = startingPosition - Vector2(0, absoluteScaledSize.y / 2);
 
-    player = MyPlayer(
-        startingPosition:
-            Vector2(absoluteScaledSize.x / 2, absoluteScaledSize.y));
-    player.isFalling = false;
-    player.parent = this;
-    player.anchor = Anchor.topLeft;
+    // player = MyPlayer(
+    //     startingPosition:
+    //         Vector2(absoluteScaledSize.x / 2, absoluteScaledSize.y));
+    // player.isFalling = false;
+    // player.parent = this;
+    // player.anchor = Anchor.topLeft;
 
     // final craneTop = CraneTop(Vector2(size.x / 2, 0) - offset + Vector2(0, 40));
     // add(craneTop);
@@ -71,11 +71,17 @@ class CraneCable extends SpriteComponent {
   }
 
   void spawnBox() {
+    print("Spawning box");
     enabled = true;
     player = MyPlayer(
         startingPosition:
             Vector2(absoluteScaledSize.x / 2, absoluteScaledSize.y));
     player.isFalling = false;
     player.parent = this;
+    player.anchor = Anchor.topLeft;
+  }
+
+  void resetPosition() {
+    position = startingPosition - Vector2(0, absoluteScaledSize.y / 2);
   }
 }
