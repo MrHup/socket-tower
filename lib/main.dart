@@ -35,7 +35,7 @@ void main() {
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
+                end: Alignment(0, -0.8),
                 colors: [Color(0xFF058bde), Color(0xFFe0f0fa)],
               ),
             ),

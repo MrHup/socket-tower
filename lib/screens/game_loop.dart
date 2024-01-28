@@ -45,16 +45,10 @@ class GameLoop extends PositionComponent
 
   @override
   void onTapDown(TapDownEvent event) {
-    debugLog("Tap down at ${event.localPosition}");
-
-    if (crane.enabled == true) {
-      print("drop");
+    debugLog("Main game tap at ${event.localPosition}");
+    if (crane.enabled) {
       crane.dropBox();
-    } else {
-      print("spawn");
-      crane.spawnBox();
     }
-    // bottomDecoration.position = bottomDecoration.position + Vector2(0, 20);
   }
 
   @override
@@ -76,8 +70,10 @@ class GameLoop extends PositionComponent
   }
 
   @override
-  void onGameResize(Vector2 size) {
-    super.onGameResize(size);
+  void onGameResize(Vector2 newSize) {
+    size = newSize;
+    super.onGameResize(newSize);
+
     debugLog('Game resized to $size');
   }
 
@@ -111,5 +107,7 @@ class GameLoop extends PositionComponent
     GameState.score++;
     scoreBoard.updateScore(GameState.score);
     lowerByValue += 50;
+
+    crane.spawnBox();
   }
 }
