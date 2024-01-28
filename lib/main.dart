@@ -10,12 +10,12 @@ void main() {
   Flame.device.fullScreen();
   Flame.device.setPortraitUpOnly();
 
-  SocketShowdown game = SocketShowdown();
+  GameRouter game = GameRouter();
   runApp(GameWidget(
-    game: kDebugMode ? SocketShowdown() : game,
+    game: kDebugMode ? GameRouter() : game,
     // overlayBuilderMap: kDebugMode ? game.overlayBuilderMap : null,
     overlayBuilderMap: {
-      "fog": (BuildContext context, SocketShowdown game) {
+      "fog": (BuildContext context, GameRouter game) {
         return Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(

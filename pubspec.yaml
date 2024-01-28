@@ -32,6 +32,7 @@ flutter:
     - assets/animations/landanimation.riv
     - assets/images/crane_base.png
     - assets/images/crane_body.png
+    - assets/images/logo.png
 
   fonts:
     - family: TitleFont

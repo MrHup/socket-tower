@@ -1,6 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:socket_showdown/components/player.dart';
-import 'package:socket_showdown/socket_showdown.dart';
+import 'package:socket_showdown/screens/game_loop.dart';
 // import 'package:socket_showdown/components/crane/top_piece.dart';
 
 class CraneCable extends SpriteComponent {
@@ -65,8 +65,8 @@ class CraneCable extends SpriteComponent {
   void dropBox() {
     enabled = false;
     player.isFalling = true;
-    player.parent = (parent as SocketShowdown).playerStackComponent;
-    (parent as SocketShowdown).playerStackComponent.players.add(player);
+    player.parent = (parent as GameLoop).playerStackComponent;
+    (parent as GameLoop).playerStackComponent.players.add(player);
     player.position = absolutePosition + Vector2(0, scaledSize.y);
   }
 
