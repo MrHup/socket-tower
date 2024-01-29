@@ -105,6 +105,10 @@ class GameLoop extends PositionComponent
     }
     playerStackComponent.players.clear();
     lowerByValue = -GameState.score * 50;
+    if (bottomDecoration.parent != null) bottomDecoration.removeFromParent();
+    bottomDecoration =
+        BottomDecoration(startingPosition: Vector2(size.x / 2, size.y));
+    bottomDecoration.parent ??= this;
     playerStackComponent.players.add(bottomDecoration);
     startGame();
     GameState.score = 0;

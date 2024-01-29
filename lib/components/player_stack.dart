@@ -1,6 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:flutter/rendering.dart';
 import 'package:socket_showdown/components/falling_box.dart';
+import 'package:socket_showdown/screens/game_loop.dart';
 
 /// This is the component responsible for handling the player stack
 /// cusotom behaviour and rendering the players based on their position
@@ -21,6 +22,19 @@ class PlayerStack extends PositionComponent {
       element.parent = this;
     }
     super.render(canvas);
+
+    maintanance();
+  }
+
+  void maintanance() {
+    for (var i = 0; i < players.length; i++) {
+      if (players[i].position.y >
+          (parent as GameLoop).absoluteScaledSize.y +
+              players[i].absoluteScaledSize.y) {
+        players[i].removeFromParent();
+        players.removeAt(i);
+      }
+    }
   }
 
   bool isOverlap(FallingBox A, FallingBox B) {
