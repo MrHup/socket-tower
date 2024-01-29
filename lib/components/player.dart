@@ -1,5 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flame/image_composition.dart';
 import 'package:socket_showdown/components/block_deleter.dart';
 import 'package:socket_showdown/components/falling_box.dart';
@@ -41,6 +42,15 @@ class MyPlayer extends FallingBox {
       setToPassive();
       position = absolutePosition;
       (parent!.parent as GameLoop).givePoint();
+
+      add(ScaleEffect.to(
+        Vector2(0.49, 0.45),
+        EffectController(
+          duration: 0.1,
+          alternate: true,
+          infinite: false,
+        ),
+      ));
     }
   }
 

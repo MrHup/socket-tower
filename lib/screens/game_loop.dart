@@ -37,8 +37,11 @@ class GameLoop extends PositionComponent
     add(scoreBoard);
 
     add(BlockDeleter(
-        collisionBoxPosition: Vector2(0, size.y - 350),
-        collisionBoxSize: Vector2(size.x, 100)));
+        collisionBoxPosition: Vector2(-size.x, size.y - 350),
+        collisionBoxSize: Vector2(size.x * 3, 200)));
+    add(BlockDeleter(
+        collisionBoxPosition: Vector2(0, 3 * size.y),
+        collisionBoxSize: Vector2(size.x * 3, 200)));
 
     // load main-menu overlay route
     game.router.pushNamed('main-menu');

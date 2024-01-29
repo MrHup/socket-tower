@@ -23,6 +23,7 @@ class BlockDeleter extends ShapeComponent with CollisionCallbacks {
       ..style = PaintingStyle.fill;
 
     hitbox = RectangleHitbox(
+      isSolid: true,
       position: collisionBoxPosition,
       size: collisionBoxSize,
     )

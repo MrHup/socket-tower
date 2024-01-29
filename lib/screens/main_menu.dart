@@ -11,24 +11,12 @@ class MainMenuRoute extends Route {
   @override
   void onPush(Route? previousRoute) {
     previousRoute!.stopTime();
-    // ..addRenderEffect(
-    //   PaintDecorator.grayscale(opacity: 0.5)..addBlur(3.0),
-    // );
   }
 
   @override
   void onPop(Route nextRoute) {
     nextRoute.resumeTime();
     (nextRoute.firstChild() as GameLoop).startGame();
-    // nextRoute.crane.spawnBox();
-    // nextRoute.gameRef.add(
-    //   ShakeEffect(
-    //     duration: 0.5,
-    //     offset: 10,
-    //     maxAngle: 0.1,
-    //   ),
-    // );
-    // ..removeRenderEffect();
   }
 }
 

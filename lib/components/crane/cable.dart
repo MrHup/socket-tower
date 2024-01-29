@@ -83,5 +83,6 @@ class CraneCable extends SpriteComponent {
 
   void resetPosition() {
     position = startingPosition - Vector2(0, absoluteScaledSize.y / 2);
+    direction = 1;
   }
 }

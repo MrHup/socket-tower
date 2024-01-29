@@ -17,24 +17,40 @@ class PlayerStack extends PositionComponent {
 
   @override
   void render(Canvas canvas) {
-    sortPlayers();
-    for (var element in players) {
-      element.parent = this;
-    }
-    super.render(canvas);
-
     maintanance();
+    sortPlayers();
+    super.render(canvas);
   }
 
   void maintanance() {
+    // clean up players that are out of bounds
     for (var i = 0; i < players.length; i++) {
       if (players[i].position.y >
-          (parent as GameLoop).absoluteScaledSize.y +
-              players[i].absoluteScaledSize.y) {
+              (parent as GameLoop).absoluteScaledSize.y +
+                  players[i].absoluteScaledSize.y &&
+          players[i].isFalling == false) {
         players[i].removeFromParent();
         players.removeAt(i);
+        continue;
       }
+      players[i].parent = this;
     }
+    // for (var i = 0; i < players.length; i++) {
+    //   // sort falling player
+    //   if (players[i].isFalling) {
+    //     for (var j = 0; j < players.length; j++) {
+    //       if (players[j].isFalling == false &&
+    //           shouldLower(players[i], players[j]) > 0) {
+    //         continue;
+    //       }
+    //       var temp = players[i];
+    //       players[i] = players[j];
+    //       players[j] = temp;
+    //       break;
+    //     }
+    //     break;
+    //   }
+    // }
   }
 
   bool isOverlap(FallingBox A, FallingBox B) {
