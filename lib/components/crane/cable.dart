@@ -1,14 +1,12 @@
 import 'package:flame/components.dart';
+import 'package:socket_showdown/components/crane/top_piece.dart';
 import 'package:socket_showdown/components/player.dart';
 import 'package:socket_showdown/screens/game_loop.dart';
-// import 'package:socket_showdown/components/crane/top_piece.dart';
 
 class CraneCable extends SpriteComponent {
-  CraneCable(this.startingPosition, {required this.screenWidth})
-      : super(scale: Vector2(1, 1));
+  CraneCable({required this.screenSize}) : super(scale: Vector2(1, 1));
 
-  final Vector2 startingPosition;
-  final double screenWidth;
+  Vector2 screenSize;
   double speed = 150;
   final Vector2 offset = Vector2(0, -600);
   final double easeDuration = 1.5;
@@ -23,27 +21,32 @@ class CraneCable extends SpriteComponent {
   Future<void> onLoad() async {
     sprite = await Sprite.load("crane_body.png");
     anchor = Anchor.topCenter;
-    position = startingPosition - Vector2(0, absoluteScaledSize.y / 2);
+    position = Vector2(screenSize.x / 2, -absoluteScaledSize.y / 2);
 
-    // player = MyPlayer(
-    //     startingPosition:
-    //         Vector2(absoluteScaledSize.x / 2, absoluteScaledSize.y));
-    // player.isFalling = false;
-    // player.parent = this;
-    // player.anchor = Anchor.topLeft;
+    final craneTop = CraneTop(Vector2(size.x / 2, 0));
+    add(craneTop);
+  }
 
-    // final craneTop = CraneTop(Vector2(size.x / 2, 0) - offset + Vector2(0, 40));
-    // add(craneTop);
+  @override
+  void onGameResize(Vector2 gameSize) {
+    super.onGameResize(gameSize);
+    resetPosition();
   }
 
   @override
   void update(double dt) {
     super.update(dt);
 
-    if (position.x <= 0 || position.x >= screenWidth) {
+    final Vector2 limit = screenSize.x > screenSize.y
+        ? screenSize.x > 1000
+            ? Vector2(screenSize.x / 2 - 200, screenSize.x / 2 + 200)
+            : Vector2(screenSize.x / 4, screenSize.x / 4 * 3)
+        : Vector2(0, screenSize.x);
+
+    if (position.x <= limit.x || position.x >= limit.y) {
       direction *= -1; // Change direction
       easeTime = 0; // Reset easeTime for the new direction
-      position.x = position.x.clamp(0, screenWidth); // Clamp position
+      position.x = position.x.clamp(limit.x, limit.y); // Clamp position
     }
     easeTime = (easeTime + dt) < easeDuration ? (easeTime + dt) : easeDuration;
 
@@ -54,7 +57,9 @@ class CraneCable extends SpriteComponent {
     double newX = position.x + direction * easedTime * speed * dt;
 
     // Calculate the corresponding y-coordinate based on isometric linear equation
-    double newY = 0.575 * newX - 300;
+    double newY = screenSize.x > screenSize.y
+        ? 0.575 * newX - screenSize.y / 2
+        : 0.575 * newX - 300;
     position = Vector2(newX, newY);
   }
 
@@ -82,7 +87,7 @@ class CraneCable extends SpriteComponent {
   }
 
   void resetPosition() {
-    position = startingPosition - Vector2(0, absoluteScaledSize.y / 2);
+    position = Vector2(screenSize.x / 2, -absoluteScaledSize.y / 2);
     direction = 1;
   }
 }

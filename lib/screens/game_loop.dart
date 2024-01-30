@@ -30,15 +30,15 @@ class GameLoop extends PositionComponent
         BottomDecoration(startingPosition: Vector2(size.x / 2, size.y));
     playerStackComponent.players.add(bottomDecoration);
 
-    crane = CraneCable(Vector2(size.x / 2, 0), screenWidth: size.x);
+    crane = CraneCable(screenSize: size);
     scoreBoard = ScoreBoard(
         givenSize: Vector2(size.x / 2, size.x / 2),
         givenPosition: Vector2(size.x / 2, size.y / 2));
     add(scoreBoard);
 
     add(BlockDeleter(
-        collisionBoxPosition: Vector2(-size.x, size.y - 350),
-        collisionBoxSize: Vector2(size.x * 3, 200)));
+        collisionBoxPosition: Vector2(-2000, size.y - 350),
+        collisionBoxSize: Vector2(6000, 200)));
     add(BlockDeleter(
         collisionBoxPosition: Vector2(0, 3 * size.y),
         collisionBoxSize: Vector2(size.x * 3, 200)));
@@ -77,6 +77,15 @@ class GameLoop extends PositionComponent
   void onGameResize(Vector2 newSize) {
     size = newSize;
     super.onGameResize(newSize);
+    playerStackComponent.size = newSize;
+    bottomDecoration.position = Vector2(size.x / 2, size.y);
+    playerStackComponent.players.forEach((element) {
+      element.position = Vector2(size.x / 2, element.position.y);
+    });
+    scoreBoard.position = Vector2(size.x / 2, size.y / 2);
+    scoreBoard.size = size.x > size.y
+        ? Vector2(size.y / 2, size.y / 2)
+        : Vector2(size.x / 2, size.x / 2);
 
     debugLog('Game resized to $size');
   }

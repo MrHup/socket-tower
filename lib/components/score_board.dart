@@ -1,4 +1,3 @@
-import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +18,6 @@ class ScoreBoard extends CircleComponent {
   late TextComponent textComponent;
 
   final _defaultColor = const Color(0x07000000);
-  late ShapeHitbox hitbox;
   @override
   Future<void> onLoad() async {
     anchor = Anchor.center;
@@ -40,5 +38,10 @@ class ScoreBoard extends CircleComponent {
 
   void updateScore(int score) {
     textComponent.text = score.toString();
+  }
+
+  void onGameResize(Vector2 gameSize) {
+    super.onGameResize(gameSize);
+    textComponent.position = Vector2(size.x / 2, size.y / 2);
   }
 }

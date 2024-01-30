@@ -20,12 +20,15 @@ class MainMenuRoute extends Route {
   }
 }
 
-class MainMenuPage extends Component
+class MainMenuPage extends PositionComponent
     with TapCallbacks, HasGameReference<GameRouter> {
+  TextComponent? tapToPlay;
+  SpriteComponent? logo;
+
   @override
   Future<void> onLoad() async {
     final game = findGame()!;
-    final SpriteComponent logo = SpriteComponent(
+    logo = SpriteComponent(
         sprite: await game.loadSprite('logo.png'),
         anchor: Anchor.center,
         position: game.size / 2,
@@ -39,11 +42,11 @@ class MainMenuPage extends Component
             ),
           ),
         ]);
-    add(logo);
+    add(logo as Component);
 
-    final tapToPlay = TextComponent(
+    tapToPlay = TextComponent(
       text: 'TAP TO START',
-      position: game.canvasSize / 2 + Vector2(0, logo.size.y / 2 + 40),
+      position: game.canvasSize / 2 + Vector2(0, logo!.size.y / 2 + 40),
       anchor: Anchor.center,
       children: [
         RotateEffect.to(
@@ -56,7 +59,16 @@ class MainMenuPage extends Component
         ),
       ],
     );
-    add(tapToPlay);
+    add(tapToPlay as Component);
+  }
+
+  @override
+  void onGameResize(Vector2 gameSize) {
+    super.onGameResize(gameSize);
+    if (logo != null && tapToPlay != null) {
+      logo!.position = gameSize / 2;
+      tapToPlay!.position = gameSize / 2 + Vector2(0, logo!.size.y / 2 + 40);
+    }
   }
 
   @override
