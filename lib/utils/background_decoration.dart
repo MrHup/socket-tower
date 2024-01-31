@@ -1,11 +1,35 @@
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
-class BackgroundDecoration extends StatelessWidget {
+class BackgroundDecoration extends StatefulWidget {
+  const BackgroundDecoration({super.key});
+
+  @override
+  State<BackgroundDecoration> createState() => _BackgroundDecorationState();
+}
+
+class _BackgroundDecorationState extends State<BackgroundDecoration>
+    with TickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+
+    _animation = Tween<double>(begin: 0.0, end: 100.0).animate(_controller);
+    _controller.repeat(reverse: true);
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: CurvePainter(),
+      painter: CurvePainter(_animation),
       child: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -16,6 +40,10 @@ class BackgroundDecoration extends StatelessWidget {
 }
 
 class CurvePainter extends CustomPainter {
+  final Animation<double> animation;
+
+  CurvePainter(this.animation) : super(repaint: animation);
+
   @override
   void paint(Canvas canvas, Size size) {
     Paint grayPaint = Paint()
@@ -23,6 +51,7 @@ class CurvePainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     for (var i = -1; i < 5; i++) {
+      double yOffset = 150.0 * i + animation.value;
       // create increasingly darker blue shapes from top to bottom
       Paint bluePaint = Paint()
         ..style = PaintingStyle.fill
@@ -36,10 +65,10 @@ class CurvePainter extends CustomPainter {
         );
 
       Path blue = Path();
-      blue.moveTo(0, 150.0 * i);
-      blue.lineTo(size.width, 150.0 * i + size.width / 1.732);
-      blue.lineTo(size.width, 150.0 * i + size.width / 1.732 + 150);
-      blue.lineTo(0, 150.0 * i + 150);
+      blue.moveTo(0, yOffset);
+      blue.lineTo(size.width, yOffset + size.width / 1.732);
+      blue.lineTo(size.width, yOffset + size.width / 1.732 + 150);
+      blue.lineTo(0, yOffset + 150);
       blue.close();
       canvas.drawPath(blue, bluePaint);
     }
