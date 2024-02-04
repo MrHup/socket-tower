@@ -11,6 +11,8 @@ class CraneCable extends SpriteComponent {
   final Vector2 offset = Vector2(0, -600);
   final double easeDuration = 1.5;
 
+  double scaleFactor = 1;
+
   int direction = 1; // 1 for moving down, -1 for moving up
   double easeTime = 0;
 
@@ -30,6 +32,13 @@ class CraneCable extends SpriteComponent {
   @override
   void onGameResize(Vector2 gameSize) {
     super.onGameResize(gameSize);
+    if (gameSize.x > gameSize.y) {
+      scale = Vector2(0.75, 0.75);
+      scaleFactor = 0.75;
+    } else {
+      scale = Vector2(.5, 0.5);
+      scaleFactor = 0.5;
+    }
     resetPosition();
   }
 
@@ -58,7 +67,7 @@ class CraneCable extends SpriteComponent {
 
     // Calculate the corresponding y-coordinate based on isometric linear equation
     double newY = screenSize.x > screenSize.y
-        ? 0.575 * newX - screenSize.y / 2
+        ? 0.575 * newX - size.y - screenSize.y / 2 + 200
         : 0.575 * newX - 300;
     position = Vector2(newX, newY);
   }
@@ -70,6 +79,7 @@ class CraneCable extends SpriteComponent {
   void dropBox() {
     enabled = false;
     player.isFalling = true;
+    player.scale = Vector2(scaleFactor, scaleFactor);
     player.parent = (parent as GameLoop).playerStackComponent;
     (parent as GameLoop).playerStackComponent.players.add(player);
     player.position = absolutePosition + Vector2(0, scaledSize.y);
@@ -79,8 +89,9 @@ class CraneCable extends SpriteComponent {
     print("Spawning box");
     enabled = true;
     player = MyPlayer(
-        startingPosition:
-            Vector2(absoluteScaledSize.x / 2, absoluteScaledSize.y));
+        startingPosition: Vector2(absoluteScaledSize.x / 2,
+            absoluteScaledSize.y * (1 / scaleFactor)));
+    player.scale = Vector2(1, 1);
     player.isFalling = false;
     player.parent = this;
     player.anchor = Anchor.topLeft;

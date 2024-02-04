@@ -77,19 +77,12 @@ class GameLoop extends PositionComponent
   void onGameResize(Vector2 newSize) {
     size = newSize;
     super.onGameResize(newSize);
-    // playerStackComponent.size = newSize;
-    // bottomDecoration.position = Vector2(size.x / 2, size.y);
-    // playerStackComponent.players.forEach((element) {
-    //   element.position = Vector2(size.x / 2, element.position.y);
-    // });
-    // playerStackComponent.anchor = Anchor.bottomCenter;
-    // playerStackComponent.position = Vector2(0, playerStackComponent.position.y);
     scoreBoard.position = Vector2(size.x / 2, size.y / 2);
     scoreBoard.size = size.x > size.y
         ? Vector2(size.y / 2, size.y / 2)
         : Vector2(size.x / 2, size.x / 2);
 
-    debugLog('Game resized to $size');
+    // debugLog('Game resized to $size');
   }
 
   @override
@@ -113,7 +106,6 @@ class GameLoop extends PositionComponent
         infinite: false,
       ),
     ));
-    print("Resetting game");
     for (final player in playerStackComponent.players) {
       player.removeFromParent();
     }

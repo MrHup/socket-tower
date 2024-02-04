@@ -73,11 +73,8 @@ class CurvePainter extends CustomPainter {
       canvas.drawPath(blue, bluePaint);
     }
 
-    double startingHeight =
-        size.width > size.height ? size.height / 10 : size.height / 1.75;
     Path path = Path();
-    path.moveTo(0, startingHeight);
-    path.lineTo(size.width, startingHeight + size.width / 1.732);
+    path.moveTo(0, size.height - size.width / 1.732);
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
     path.close();

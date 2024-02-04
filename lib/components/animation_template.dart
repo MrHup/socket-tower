@@ -10,7 +10,6 @@ class SkillsAnimationComponent extends RiveComponent with TapCallbacks {
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
     anchor = Anchor.center;
-    // scale = Vector2(0.5, 0.5);
   }
 
   @override
