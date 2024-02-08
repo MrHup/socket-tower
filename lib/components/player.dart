@@ -7,6 +7,7 @@ import 'package:socket_showdown/components/falling_box.dart';
 import 'package:socket_showdown/components/player_stack.dart';
 import 'package:socket_showdown/screens/game_loop.dart';
 import 'package:socket_showdown/static/constants.dart';
+import 'package:socket_showdown/static/game_state.dart';
 
 class MyPlayer extends FallingBox {
   MyPlayer(
@@ -34,7 +35,6 @@ class MyPlayer extends FallingBox {
     acceleration = 0;
     isFalling = false;
 
-    // print("onCollision with $other");
     if (hitbox.collisionType == CollisionType.active && other is BlockDeleter) {
       (parent!.parent as GameLoop).resetGame();
       removeFromParent();
@@ -44,6 +44,13 @@ class MyPlayer extends FallingBox {
         other.parent is PlayerStack) {
       setToPassive();
       (parent!.parent as GameLoop).givePoint();
+      if (GameState.score > 1) {
+        (parent!.parent as GameLoop).lowerByValue += size.y / 4;
+      }
+
+      // Offset balance on collision
+      double distanceFromCenter = absolutePosition.x;
+      (other.parent as PlayerStack).balanceShift += distanceFromCenter;
 
       add(ScaleEffect.to(
         Vector2(scale.x - 0.01, scale.y - 0.05),

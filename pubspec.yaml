@@ -34,6 +34,7 @@ flutter:
     - assets/images/crane_base.png
     - assets/images/crane_body.png
     - assets/images/logo.png
+    - assets/images/fog.png
 
   fonts:
     - family: TitleFont

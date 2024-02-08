@@ -10,16 +10,39 @@ class PlayerStack extends PositionComponent {
   PlayerStack(Vector2 size)
       : super(
           size: size,
-          position: Vector2(0, 0),
+          position: Vector2(size.x / 2, size.y),
         );
 
   List<FallingBox> players = [];
+  bool rotateLeft = true;
+  double balanceShift = 0;
 
   @override
   void render(Canvas canvas) {
     maintanance();
     sortPlayers();
     super.render(canvas);
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    rotateStack();
+    anchor = Anchor.bottomCenter;
+  }
+
+  void rotateStack() {
+    if (rotateLeft) {
+      angle -= balanceShift / 5000000;
+    } else {
+      angle += balanceShift / 5000000;
+    }
+
+    if (angle <= -0.1) {
+      rotateLeft = false;
+    } else if (angle >= 0.1) {
+      rotateLeft = true;
+    }
   }
 
   void maintanance() {

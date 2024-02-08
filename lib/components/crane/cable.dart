@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flame/components.dart';
 import 'package:socket_showdown/components/crane/top_piece.dart';
 import 'package:socket_showdown/components/player.dart';
 import 'package:socket_showdown/components/players/player_factory.dart';
 import 'package:socket_showdown/screens/game_loop.dart';
+import 'package:socket_showdown/static/game_state.dart';
 
 class CraneCable extends SpriteComponent {
   CraneCable({required this.screenSize}) : super(scale: Vector2(1, 1));
@@ -52,8 +54,12 @@ class CraneCable extends SpriteComponent {
     // Calculate the eased time using the easing function
     double easedTime = easeInOutQuad(easeTime / easeDuration);
 
+    // Compute incremental speed based on score
+    double increment = 2.973 +
+        (0.085 - 1.973) / (1 + math.pow((GameState.score / 5.14), 2.39));
+
     // Calculate the new x-coordinate with easing
-    double newX = position.x + direction * easedTime * speed * dt;
+    double newX = position.x + direction * easedTime * speed * increment * dt;
 
     // Calculate the corresponding y-coordinate based on isometric linear equation
     double newY = 0.575 * newX - 300;
@@ -67,7 +73,6 @@ class CraneCable extends SpriteComponent {
   void dropBox() {
     enabled = false;
     player.isFalling = true;
-    print(position);
     player.position = Vector2(position.x, position.y + absoluteScaledSize.y);
     player.parent = (parent as GameLoop).playerStackComponent;
     (parent as GameLoop).playerStackComponent.players.add(player);

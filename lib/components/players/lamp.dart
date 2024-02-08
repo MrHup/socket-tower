@@ -8,7 +8,7 @@ class Lamp extends MyPlayer {
   }) : super(
           imgPath: 'characters/lamp.png',
           startingPosition: startingPosition,
-          collisionBox: Vector2(201, 125),
-          positionCollisionBox: Vector2(0, 67),
+          collisionBox: Vector2(201, 136),
+          positionCollisionBox: Vector2(20, 57),
         );
 }

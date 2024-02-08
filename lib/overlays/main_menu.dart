@@ -79,6 +79,7 @@ class _MainMenuState extends State<MainMenu>
         (widget.game as FlameGame).overlays.remove('menu');
         ((widget.game as SocketTower).world.children.first as GameLoop)
             .startGame();
+        // (widget.game as SocketTower).overlays.add('tap-overlay');
       },
     );
   }

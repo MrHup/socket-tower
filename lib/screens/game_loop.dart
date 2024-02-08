@@ -9,6 +9,7 @@ import 'package:socket_showdown/components/player.dart';
 import 'package:socket_showdown/components/player_stack.dart';
 import 'package:socket_showdown/components/score_board.dart';
 import 'package:socket_showdown/socket_tower.dart';
+import 'package:socket_showdown/static/constants.dart';
 import 'package:socket_showdown/static/game_state.dart';
 import 'package:socket_showdown/utils/logger.dart';
 
@@ -52,21 +53,21 @@ class GameLoop extends PositionComponent
     }
   }
 
+  void tapDown() {
+    if (crane.enabled) {
+      crane.dropBox();
+    }
+  }
+
   @override
   void update(double dt) {
     super.update(dt);
     if (lowerByValue > 0) {
-      lowerByValue -= 1;
+      double offset = Constants.SPEED * dt;
+      lowerByValue -= offset;
       playerStackComponent.players.forEach((element) {
-        element.position = element.position + Vector2(0, 100 * dt);
+        element.position = element.position + Vector2(0, offset);
       });
-    }
-    if (lowerByValue < 0) {
-      bottomDecoration.position =
-          bottomDecoration.position - Vector2(0, 200 * dt);
-      if (bottomDecoration.position.y <= size.y) {
-        lowerByValue = 0;
-      }
     }
   }
 
@@ -95,7 +96,6 @@ class GameLoop extends PositionComponent
       player.removeFromParent();
     }
     playerStackComponent.players.clear();
-    lowerByValue = -GameState.score * 50;
     if (bottomDecoration.parent != null) bottomDecoration.removeFromParent();
     bottomDecoration =
         BottomDecoration(startingPosition: Vector2(size.x / 2, size.y));
@@ -104,12 +104,13 @@ class GameLoop extends PositionComponent
     startGame();
     GameState.score = 0;
     scoreBoard.updateScore(GameState.score);
+    playerStackComponent.balanceShift = 0;
+    playerStackComponent.angle = 0;
   }
 
   void givePoint() {
     GameState.score++;
     scoreBoard.updateScore(GameState.score);
-    lowerByValue += 50;
     crane.spawnBox();
   }
 
