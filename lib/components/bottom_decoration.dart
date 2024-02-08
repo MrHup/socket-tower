@@ -13,6 +13,11 @@ class BottomDecoration extends FallingBox {
         );
 
   @override
+  void onGameResize(Vector2 gameSize) {
+    super.onGameResize(gameSize);
+  }
+
+  @override
   Future<void> onLoad() async {
     await super.onLoad();
     setToPassive();

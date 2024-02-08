@@ -40,11 +40,10 @@ class MyPlayer extends FallingBox {
     if (hitbox.collisionType == CollisionType.active &&
         other.parent is PlayerStack) {
       setToPassive();
-      position = absolutePosition;
       (parent!.parent as GameLoop).givePoint();
 
       add(ScaleEffect.to(
-        Vector2(0.49, 0.45),
+        Vector2(scale.x - 0.01, scale.y - 0.05),
         EffectController(
           duration: 0.1,
           alternate: true,

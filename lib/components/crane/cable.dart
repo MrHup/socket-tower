@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flame/components.dart';
 import 'package:socket_showdown/components/crane/top_piece.dart';
 import 'package:socket_showdown/components/player.dart';
@@ -37,11 +39,7 @@ class CraneCable extends SpriteComponent {
   void update(double dt) {
     super.update(dt);
 
-    final Vector2 limit = screenSize.x > screenSize.y
-        ? screenSize.x > 1000
-            ? Vector2(screenSize.x / 2 - 200, screenSize.x / 2 + 200)
-            : Vector2(screenSize.x / 4, screenSize.x / 4 * 3)
-        : Vector2(0, screenSize.x);
+    final Vector2 limit = Vector2(50, screenSize.x - 50);
 
     if (position.x <= limit.x || position.x >= limit.y) {
       direction *= -1; // Change direction
@@ -57,9 +55,7 @@ class CraneCable extends SpriteComponent {
     double newX = position.x + direction * easedTime * speed * dt;
 
     // Calculate the corresponding y-coordinate based on isometric linear equation
-    double newY = screenSize.x > screenSize.y
-        ? 0.575 * newX - screenSize.y / 2
-        : 0.575 * newX - 300;
+    double newY = 0.575 * newX - 300;
     position = Vector2(newX, newY);
   }
 
@@ -70,9 +66,10 @@ class CraneCable extends SpriteComponent {
   void dropBox() {
     enabled = false;
     player.isFalling = true;
+    print(position);
+    player.position = Vector2(position.x, position.y + absoluteScaledSize.y);
     player.parent = (parent as GameLoop).playerStackComponent;
     (parent as GameLoop).playerStackComponent.players.add(player);
-    player.position = absolutePosition + Vector2(0, scaledSize.y);
   }
 
   void spawnBox() {

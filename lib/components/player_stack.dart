@@ -35,22 +35,6 @@ class PlayerStack extends PositionComponent {
       }
       players[i].parent = this;
     }
-    // for (var i = 0; i < players.length; i++) {
-    //   // sort falling player
-    //   if (players[i].isFalling) {
-    //     for (var j = 0; j < players.length; j++) {
-    //       if (players[j].isFalling == false &&
-    //           shouldLower(players[i], players[j]) > 0) {
-    //         continue;
-    //       }
-    //       var temp = players[i];
-    //       players[i] = players[j];
-    //       players[j] = temp;
-    //       break;
-    //     }
-    //     break;
-    //   }
-    // }
   }
 
   bool isOverlap(FallingBox A, FallingBox B) {

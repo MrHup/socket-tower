@@ -8,12 +8,12 @@ import 'package:socket_showdown/components/crane/cable.dart';
 import 'package:socket_showdown/components/player.dart';
 import 'package:socket_showdown/components/player_stack.dart';
 import 'package:socket_showdown/components/score_board.dart';
-import 'package:socket_showdown/socket_showdown.dart';
+import 'package:socket_showdown/socket_tower.dart';
 import 'package:socket_showdown/static/game_state.dart';
 import 'package:socket_showdown/utils/logger.dart';
 
 class GameLoop extends PositionComponent
-    with TapCallbacks, HasCollisionDetection, HasGameReference<GameRouter> {
+    with TapCallbacks, HasCollisionDetection, HasGameReference<SocketTower> {
   late MyPlayer player;
   late CraneCable crane;
   late BottomDecoration bottomDecoration;
@@ -42,9 +42,6 @@ class GameLoop extends PositionComponent
     add(BlockDeleter(
         collisionBoxPosition: Vector2(0, 3 * size.y),
         collisionBoxSize: Vector2(size.x * 3, 200)));
-
-    // load main-menu overlay route
-    game.router.pushNamed('main-menu');
   }
 
   @override
@@ -74,23 +71,6 @@ class GameLoop extends PositionComponent
   }
 
   @override
-  void onGameResize(Vector2 newSize) {
-    size = newSize;
-    super.onGameResize(newSize);
-    playerStackComponent.size = newSize;
-    bottomDecoration.position = Vector2(size.x / 2, size.y);
-    playerStackComponent.players.forEach((element) {
-      element.position = Vector2(size.x / 2, element.position.y);
-    });
-    scoreBoard.position = Vector2(size.x / 2, size.y / 2);
-    scoreBoard.size = size.x > size.y
-        ? Vector2(size.y / 2, size.y / 2)
-        : Vector2(size.x / 2, size.x / 2);
-
-    debugLog('Game resized to $size');
-  }
-
-  @override
   void render(Canvas canvas) {
     canvas.save();
 
@@ -111,7 +91,6 @@ class GameLoop extends PositionComponent
         infinite: false,
       ),
     ));
-    print("Resetting game");
     for (final player in playerStackComponent.players) {
       player.removeFromParent();
     }

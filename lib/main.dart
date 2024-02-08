@@ -2,7 +2,8 @@ import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:socket_showdown/socket_showdown.dart';
+import 'package:socket_showdown/overlays/main_menu.dart';
+import 'package:socket_showdown/socket_tower.dart';
 import 'package:socket_showdown/utils/background_decoration.dart';
 
 void main() {
@@ -10,27 +11,25 @@ void main() {
   Flame.device.fullScreen();
   Flame.device.setPortraitUpOnly();
 
-  GameRouter game = GameRouter();
+  final game = SocketTower();
   runApp(GameWidget(
-    game: kDebugMode ? GameRouter() : game,
-    // overlayBuilderMap: kDebugMode ? game.overlayBuilderMap : null,
+    game: kDebugMode ? SocketTower() : game,
     overlayBuilderMap: {
-      "fog": (BuildContext context, GameRouter game) {
+      'menu': (context, game) {
+        return MainMenu(game);
+      },
+      'test': (context, game) {
         return Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment(0, 1),
-              end: Alignment(0, 0.7),
-              colors: [Color(0xFF555f75), Color(0x00555f75)],
-            ),
-          ),
-        );
+            color: Colors.red,
+            child: GestureDetector(
+                onTap: () => (game! as FlameGame).overlays.remove('test'),
+                child: const Text('Test')));
       },
     },
+    initialActiveOverlays: const ['menu'],
     backgroundBuilder: (context) {
       return Stack(
         children: [
-          // draw a  gray shape that fills half of the screen and curves down
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -40,7 +39,7 @@ void main() {
               ),
             ),
           ),
-          BackgroundDecoration(),
+          const BackgroundDecoration(),
         ],
       );
     },
