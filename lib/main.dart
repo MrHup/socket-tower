@@ -30,15 +30,7 @@ void main() {
     backgroundBuilder: (context) {
       return Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment(0, -0.8),
-                colors: [Color(0xFF058bde), Color(0xFFe0f0fa)],
-              ),
-            ),
-          ),
+          Container(color: Color.fromARGB(255, 133, 172, 255)),
           const BackgroundDecoration(),
         ],
       );
