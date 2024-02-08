@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:ui' as ui;
 
 class BackgroundDecoration extends StatefulWidget {
   const BackgroundDecoration({super.key});
@@ -19,11 +18,11 @@ class _BackgroundDecorationState extends State<BackgroundDecoration>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(seconds: 2),
     );
 
-    _animation = Tween<double>(begin: 0.0, end: 100.0).animate(_controller);
-    _controller.repeat(reverse: true);
+    _animation = Tween<double>(begin: 0.0, end: 300.0).animate(_controller);
+    _controller.repeat(reverse: false);
   }
 
   @override
@@ -50,15 +49,15 @@ class CurvePainter extends CustomPainter {
       ..color = Color(0xFF555f75)
       ..style = PaintingStyle.fill;
 
-    final Color color2 = Color(0xFF058bde);
-    final Color color1 = Color.fromARGB(36, 22, 157, 241);
+    final Color color2 = Color.fromARGB(183, 19, 165, 255);
+    final Color color1 = Color.fromARGB(166, 42, 173, 255);
 
-    for (var i = -1; i < 5; i++) {
+    for (var i = -10; i < 14; i++) {
       double yOffset = 150.0 * i + animation.value;
       // create increasingly darker blue shapes from top to bottom
       Paint bluePaint = Paint()
         ..style = PaintingStyle.fill
-        ..color = Color.lerp(color1, color2, i / 5)!;
+        ..color = i.isEven ? color1 : color2;
 
       Path blue = Path();
       blue.moveTo(0, yOffset);
