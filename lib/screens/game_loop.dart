@@ -82,7 +82,15 @@ class GameLoop extends PositionComponent
         ? Vector2(size.y / 2, size.y / 2)
         : Vector2(size.x / 2, size.x / 2);
 
-    // debugLog('Game resized to $size');
+    if (size.x > size.y) {
+      anchor = Anchor.center;
+      scale = Vector2(1, 1);
+      position = Vector2(size.x / 2, size.y / 2);
+    } else {
+      anchor = Anchor.topLeft;
+      scale = Vector2(1, 1);
+      position = Vector2(0, 0);
+    }
   }
 
   @override

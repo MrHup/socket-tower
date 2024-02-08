@@ -15,11 +15,6 @@ class BottomDecoration extends FallingBox {
   @override
   void onGameResize(Vector2 gameSize) {
     super.onGameResize(gameSize);
-    if (gameSize.x > gameSize.y) {
-      scale = Vector2(.7, .7);
-    } else {
-      scale = Vector2(.5, 0.5);
-    }
   }
 
   @override

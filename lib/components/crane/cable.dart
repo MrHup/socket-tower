@@ -32,13 +32,13 @@ class CraneCable extends SpriteComponent {
   @override
   void onGameResize(Vector2 gameSize) {
     super.onGameResize(gameSize);
-    if (gameSize.x > gameSize.y) {
-      scale = Vector2(0.75, 0.75);
-      scaleFactor = 0.75;
-    } else {
-      scale = Vector2(.5, 0.5);
-      scaleFactor = 0.5;
-    }
+    // if (gameSize.x > gameSize.y) {
+    //   scale = Vector2(0.75, 0.75);
+    //   scaleFactor = 0.75;
+    // } else {
+    //   scale = Vector2(.5, 0.5);
+    //   scaleFactor = 0.5;
+    // }
     resetPosition();
   }
 
@@ -79,7 +79,6 @@ class CraneCable extends SpriteComponent {
   void dropBox() {
     enabled = false;
     player.isFalling = true;
-    player.scale = Vector2(scaleFactor, scaleFactor);
     player.parent = (parent as GameLoop).playerStackComponent;
     (parent as GameLoop).playerStackComponent.players.add(player);
     player.position = absolutePosition + Vector2(0, scaledSize.y);
@@ -91,7 +90,6 @@ class CraneCable extends SpriteComponent {
     player = MyPlayer(
         startingPosition: Vector2(absoluteScaledSize.x / 2,
             absoluteScaledSize.y * (1 / scaleFactor)));
-    player.scale = Vector2(1, 1);
     player.isFalling = false;
     player.parent = this;
     player.anchor = Anchor.topLeft;
