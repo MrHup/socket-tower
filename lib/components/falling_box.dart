@@ -88,7 +88,7 @@ class FallingBox extends SpriteComponent with CollisionCallbacks {
 
   void resetPosition() {
     if (skillsAnimationComponent.parent != null) {
-      print("remove skillsAnimationComponent for $this");
+      // print("remove skillsAnimationComponent for $this");
       remove(skillsAnimationComponent);
     }
   }
@@ -100,7 +100,7 @@ class FallingBox extends SpriteComponent with CollisionCallbacks {
   void spawnTouchDownEffects(PositionComponent other) {
     if (hitbox.collisionType == CollisionType.active || other is BlockDeleter)
       return;
-    print("spawnTouchDownEffects for $this");
+    // print("spawnTouchDownEffects for $this");
     skillsAnimationComponent = SkillsAnimationComponent(skillsArtboard);
     add(skillsAnimationComponent);
     skillsAnimationComponent.position = Vector2(size.x / 2, size.y / 4);

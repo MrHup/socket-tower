@@ -73,7 +73,6 @@ class CraneCable extends SpriteComponent {
   void dropBox() {
     enabled = false;
     player.isFalling = true;
-    print(position);
     player.position = Vector2(position.x, position.y + absoluteScaledSize.y);
     player.parent = (parent as GameLoop).playerStackComponent;
     (parent as GameLoop).playerStackComponent.players.add(player);

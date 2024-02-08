@@ -104,6 +104,8 @@ class GameLoop extends PositionComponent
     startGame();
     GameState.score = 0;
     scoreBoard.updateScore(GameState.score);
+    playerStackComponent.balanceShift = 0;
+    playerStackComponent.angle = 0;
   }
 
   void givePoint() {

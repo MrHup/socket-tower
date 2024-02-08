@@ -14,7 +14,6 @@ class SkillsAnimationComponent extends RiveComponent with TapCallbacks {
 
   @override
   void onLoad() {
-    print("Loaded");
     final controller = StateMachineController.fromArtboard(
       artboard,
       "State Machine 2",
