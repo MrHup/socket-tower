@@ -17,8 +17,6 @@ class MyPlayer extends FallingBox {
           positionCollisionBox: Vector2(0, 67),
         );
 
-  double differenceFromCenter = 0;
-
   @override
   void render(Canvas c) {
     if (Constants.SHOW_COLLISION_BOX) {
@@ -41,13 +39,7 @@ class MyPlayer extends FallingBox {
 
     if (hitbox.collisionType == CollisionType.active &&
         other.parent is PlayerStack) {
-      PlayerStack playerStack = parent as PlayerStack;
-      differenceFromCenter =
-          (playerStack.parent as GameLoop).absoluteScaledSize.x / 2 -
-              absolutePosition.x;
-
       setToPassive();
-      position = absolutePosition;
       (parent!.parent as GameLoop).givePoint();
 
       add(ScaleEffect.to(

@@ -3,7 +3,6 @@ import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/rendering.dart';
-import 'package:socket_showdown/socket_showdown.dart';
 
 class PauseRoute extends Route {
   PauseRoute() : super(PausePage.new, transparent: true);
@@ -25,8 +24,7 @@ class PauseRoute extends Route {
   }
 }
 
-class PausePage extends Component
-    with TapCallbacks, HasGameReference<GameRouter> {
+class PausePage extends Component with TapCallbacks, HasGameReference {
   @override
   Future<void> onLoad() async {
     final game = findGame()!;
@@ -52,6 +50,6 @@ class PausePage extends Component
   @override
   bool containsLocalPoint(Vector2 point) => true;
 
-  @override
-  void onTapUp(TapUpEvent event) => game.router.pop();
+  // @override
+  // void onTapUp(TapUpEvent event) => game.router.pop();
 }

@@ -3,7 +3,6 @@ import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:socket_showdown/screens/game_loop.dart';
-import 'package:socket_showdown/socket_showdown.dart';
 
 class MainMenuRoute extends Route {
   MainMenuRoute() : super(MainMenuPage.new, transparent: true);
@@ -21,7 +20,7 @@ class MainMenuRoute extends Route {
 }
 
 class MainMenuPage extends PositionComponent
-    with TapCallbacks, HasGameReference<GameRouter> {
+    with TapCallbacks, HasGameReference {
   TextComponent? tapToPlay;
   SpriteComponent? logo;
 
@@ -74,6 +73,6 @@ class MainMenuPage extends PositionComponent
   @override
   bool containsLocalPoint(Vector2 point) => true;
 
-  @override
-  void onTapUp(TapUpEvent event) => game.router.pop();
+  // @override
+  // void onTapUp(TapUpEvent event) => game.router.pop();
 }

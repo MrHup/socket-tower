@@ -1,7 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flutter/rendering.dart';
 import 'package:socket_showdown/components/falling_box.dart';
-import 'package:socket_showdown/components/player.dart';
 import 'package:socket_showdown/screens/game_loop.dart';
 
 /// This is the component responsible for handling the player stack
@@ -15,24 +14,6 @@ class PlayerStack extends PositionComponent {
         );
 
   List<FallingBox> players = [];
-
-  @override
-  void onGameResize(Vector2 gameSize) {
-    super.onGameResize(gameSize);
-    for (var i = 0; i < children.length; i++) {
-      (children.elementAt(i) as PositionComponent).position = Vector2(
-          gameSize.x / 2,
-          (children.elementAt(i) as PositionComponent).position.y);
-
-      if (children.elementAt(i) is MyPlayer) {
-        double offset =
-            (children.elementAt(i) as MyPlayer).differenceFromCenter;
-        (children.elementAt(i) as PositionComponent).position = Vector2(
-            gameSize.x / 2 - offset,
-            (children.elementAt(i) as PositionComponent).position.y);
-      }
-    }
-  }
 
   @override
   void render(Canvas canvas) {
@@ -54,22 +35,6 @@ class PlayerStack extends PositionComponent {
       }
       players[i].parent = this;
     }
-    // for (var i = 0; i < players.length; i++) {
-    //   // sort falling player
-    //   if (players[i].isFalling) {
-    //     for (var j = 0; j < players.length; j++) {
-    //       if (players[j].isFalling == false &&
-    //           shouldLower(players[i], players[j]) > 0) {
-    //         continue;
-    //       }
-    //       var temp = players[i];
-    //       players[i] = players[j];
-    //       players[j] = temp;
-    //       break;
-    //     }
-    //     break;
-    //   }
-    // }
   }
 
   bool isOverlap(FallingBox A, FallingBox B) {
