@@ -9,14 +9,17 @@ import 'package:socket_showdown/screens/game_loop.dart';
 import 'package:socket_showdown/static/constants.dart';
 
 class MyPlayer extends FallingBox {
-  MyPlayer({required Vector2 startingPosition})
+  MyPlayer(
+      {required imgPath,
+      required startingPosition,
+      required collisionBox,
+      required positionCollisionBox})
       : super(
-          imgPath: 'player.png',
+          imgPath: imgPath,
           startingPosition: startingPosition,
-          collisionBox: Vector2(201, 125),
-          positionCollisionBox: Vector2(0, 67),
+          collisionBox: collisionBox,
+          positionCollisionBox: positionCollisionBox,
         );
-
   @override
   void render(Canvas c) {
     if (Constants.SHOW_COLLISION_BOX) {

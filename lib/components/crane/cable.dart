@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:socket_showdown/components/crane/top_piece.dart';
 import 'package:socket_showdown/components/player.dart';
+import 'package:socket_showdown/components/players/player_factory.dart';
 import 'package:socket_showdown/screens/game_loop.dart';
 
 class CraneCable extends SpriteComponent {
@@ -75,9 +76,8 @@ class CraneCable extends SpriteComponent {
   void spawnBox() {
     print("Spawning box");
     enabled = true;
-    player = MyPlayer(
-        startingPosition:
-            Vector2(absoluteScaledSize.x / 2, absoluteScaledSize.y));
+    player = PlayerFactory.createPlayer(
+        Vector2(absoluteScaledSize.x / 2, absoluteScaledSize.y));
     player.isFalling = false;
     player.parent = this;
     player.anchor = Anchor.topLeft;
