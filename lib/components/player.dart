@@ -7,6 +7,7 @@ import 'package:socket_showdown/components/falling_box.dart';
 import 'package:socket_showdown/components/player_stack.dart';
 import 'package:socket_showdown/screens/game_loop.dart';
 import 'package:socket_showdown/static/constants.dart';
+import 'package:socket_showdown/static/game_state.dart';
 
 class MyPlayer extends FallingBox {
   MyPlayer(
@@ -44,6 +45,9 @@ class MyPlayer extends FallingBox {
         other.parent is PlayerStack) {
       setToPassive();
       (parent!.parent as GameLoop).givePoint();
+      if (GameState.score > 1) {
+        (parent!.parent as GameLoop).lowerByValue += size.y / 4;
+      }
 
       add(ScaleEffect.to(
         Vector2(scale.x - 0.01, scale.y - 0.05),

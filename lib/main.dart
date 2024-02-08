@@ -3,6 +3,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_showdown/overlays/main_menu.dart';
+import 'package:socket_showdown/screens/game_loop.dart';
 import 'package:socket_showdown/socket_tower.dart';
 import 'package:socket_showdown/utils/background_decoration.dart';
 
@@ -25,8 +26,24 @@ void main() {
                 onTap: () => (game! as FlameGame).overlays.remove('test'),
                 child: const Text('Test')));
       },
+      'tap-overlay': (context, game) {
+        return GestureDetector(
+          onTapDown: (details) =>
+              ((game as SocketTower).world.children.first as GameLoop)
+                  .tapDown(),
+          child: Container(
+            color: Color.fromARGB(0, 0, 0, 0),
+            child: Image.asset(
+              'assets/images/fog.png',
+              fit: BoxFit.fill,
+              width: double.infinity,
+              height: double.infinity,
+            ),
+          ),
+        );
+      },
     },
-    initialActiveOverlays: const ['menu'],
+    initialActiveOverlays: const ['tap-overlay', 'menu'],
     backgroundBuilder: (context) {
       return Stack(
         children: [
