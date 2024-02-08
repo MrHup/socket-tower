@@ -2,6 +2,7 @@ import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:socket_showdown/overlays/main_menu.dart';
 import 'package:socket_showdown/socket_tower.dart';
 import 'package:socket_showdown/utils/background_decoration.dart';
 
@@ -12,7 +13,20 @@ void main() {
 
   final game = SocketTower();
   runApp(GameWidget(
-    game: kDebugMode ? game : game,
+    game: kDebugMode ? SocketTower() : game,
+    overlayBuilderMap: {
+      'menu': (context, game) {
+        return MainMenu(game);
+      },
+      'test': (context, game) {
+        return Container(
+            color: Colors.red,
+            child: GestureDetector(
+                onTap: () => (game! as FlameGame).overlays.remove('test'),
+                child: const Text('Test')));
+      },
+    },
+    initialActiveOverlays: const ['menu'],
     backgroundBuilder: (context) {
       return Stack(
         children: [

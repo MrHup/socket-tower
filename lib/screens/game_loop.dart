@@ -42,8 +42,6 @@ class GameLoop extends PositionComponent
     add(BlockDeleter(
         collisionBoxPosition: Vector2(0, 3 * size.y),
         collisionBoxSize: Vector2(size.x * 3, 200)));
-
-    startGame();
   }
 
   @override
