@@ -50,19 +50,15 @@ class CurvePainter extends CustomPainter {
       ..color = Color(0xFF555f75)
       ..style = PaintingStyle.fill;
 
+    final Color color2 = Color(0xFF058bde);
+    final Color color1 = Color.fromARGB(36, 22, 157, 241);
+
     for (var i = -1; i < 5; i++) {
       double yOffset = 150.0 * i + animation.value;
       // create increasingly darker blue shapes from top to bottom
       Paint bluePaint = Paint()
         ..style = PaintingStyle.fill
-        ..shader = ui.Gradient.linear(
-          Offset(0, size.height / 2),
-          Offset(size.width, size.height - size.height / 2),
-          [
-            Color.fromARGB(110 + i * 5 * 10, 104, 201, 253),
-            Color.fromARGB(60 + i * 5 * 10, 17, 169, 253)
-          ],
-        );
+        ..color = Color.lerp(color1, color2, i / 5)!;
 
       Path blue = Path();
       blue.moveTo(0, yOffset);
