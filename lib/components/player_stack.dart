@@ -48,33 +48,38 @@ class PlayerStack extends PositionComponent {
   void maintanance() {
     // clean up players that are out of bounds
     for (var i = 0; i < players.length; i++) {
+      players[i].parent = this;
+      if (players[i].hitbox == null) {
+        continue; // TODO: experiment with break for better performance
+      }
       if (players[i].position.y >
               (parent as GameLoop).absoluteScaledSize.y +
-                  players[i].absoluteScaledSize.y &&
+                  players[i].hitbox!.absoluteScaledSize.y &&
           players[i].isFalling == false) {
+        print("Removing player");
         players[i].removeFromParent();
         players.removeAt(i);
         continue;
       }
-      players[i].parent = this;
     }
   }
 
   bool isOverlap(FallingBox A, FallingBox B) {
-    if (B.hitbox.absolutePosition.x + B.hitbox.absoluteScaledSize.x <
-            A.hitbox.absolutePosition.x ||
-        A.hitbox.absolutePosition.x + A.hitbox.absoluteScaledSize.x <
-            B.hitbox.absolutePosition.x) {
+    if (A.hitbox == null || B.hitbox == null) return false;
+    if (B.hitbox!.absolutePosition.x + B.hitbox!.absoluteScaledSize.x <
+            A.hitbox!.absolutePosition.x ||
+        A.hitbox!.absolutePosition.x + A.hitbox!.absoluteScaledSize.x <
+            B.hitbox!.absolutePosition.x) {
       return false;
     }
     return true;
   }
 
   int shouldLower(FallingBox A, FallingBox B) {
-    final x1 = A.hitbox.absolutePosition.x;
-    final y1 = A.hitbox.absolutePosition.y;
-    final x2 = B.hitbox.absolutePosition.x;
-    final y2 = B.hitbox.absolutePosition.y;
+    final x1 = A.hitbox!.absolutePosition.x;
+    final y1 = A.hitbox!.absolutePosition.y;
+    final x2 = B.hitbox!.absolutePosition.x;
+    final y2 = B.hitbox!.absolutePosition.y;
     if (isOverlap(A, B)) {
       if (y1 < y2 && x1 < x2) {
         return 1;

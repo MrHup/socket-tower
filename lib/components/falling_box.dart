@@ -6,25 +6,27 @@ import 'package:socket_showdown/components/animation_template.dart';
 import 'package:socket_showdown/components/block_deleter.dart';
 import 'package:socket_showdown/static/constants.dart';
 
-class FallingBox extends SpriteComponent with CollisionCallbacks {
+class FallingBox extends PositionComponent with CollisionCallbacks {
   FallingBox(
       {required this.imgPath,
       required this.startingPosition,
       required this.positionCollisionBox,
+      this.animationName,
       this.collisionBox,
       this.isFalling = true,
-      this.customAnchor = Anchor.topCenter})
+      this.customAnchor = Anchor.bottomCenter})
       : super(scale: Vector2(.5, .5));
 
   final String imgPath;
   final Vector2? collisionBox;
   final Vector2 startingPosition;
   final Anchor customAnchor;
+  final String? animationName;
   Vector2 positionCollisionBox;
   bool isFalling;
 
   final _defaultColor = Color.fromARGB(135, 255, 86, 86);
-  late ShapeHitbox hitbox;
+  ShapeHitbox? hitbox;
 
   int id = 0;
   static int BOX_COUNT = 0;
@@ -34,21 +36,26 @@ class FallingBox extends SpriteComponent with CollisionCallbacks {
   static const double CUBE_WEIGHT = Constants.CUBE_WEIGHT;
   double acceleration = CUBE_WEIGHT * 0.01;
 
-  // tocuh effects animation
-  late SkillsAnimationComponent skillsAnimationComponent;
-  late Artboard skillsArtboard;
-
   @override
   Future<void> onLoad() async {
     id = BOX_COUNT++;
-    // load touch down effects
-    skillsArtboard = await loadArtboard(
-        RiveFile.asset('assets/animations/landanimation.riv'));
-    skillsAnimationComponent = SkillsAnimationComponent(skillsArtboard);
 
-    sprite = await Sprite.load(imgPath);
     position = startingPosition;
     anchor = customAnchor;
+
+    if (animationName != null) {
+      final boxArtboard = await loadArtboard(
+          RiveFile.asset('assets/animations/$animationName.riv'));
+      final boxAnimation = SkillsAnimationComponent(boxArtboard, animationName!)
+        ..anchor = customAnchor;
+      add(boxAnimation);
+    } else {
+      // spawn sprite instead of animation
+      final sprite = SpriteComponent()
+        ..sprite = await Sprite.load(imgPath)
+        ..anchor = customAnchor;
+      add(sprite);
+    }
 
     final defaultPaint = Paint()
       ..color = _defaultColor
@@ -56,7 +63,7 @@ class FallingBox extends SpriteComponent with CollisionCallbacks {
 
     // make parallelogram hitbox
     Vector2 startingPos = positionCollisionBox;
-    Vector2 startingSize = collisionBox ?? sprite!.srcSize;
+    Vector2 startingSize = collisionBox ?? size;
 
     hitbox = PolygonHitbox([
       startingPos,
@@ -66,9 +73,10 @@ class FallingBox extends SpriteComponent with CollisionCallbacks {
       startingPos + Vector2(0, startingSize.y),
     ])
       ..paint = defaultPaint
+      ..anchor = Anchor.bottomRight
       ..renderShape = Constants.SHOW_COLLISION_BOX;
 
-    add(hitbox);
+    add(hitbox!);
   }
 
   @override
@@ -82,27 +90,32 @@ class FallingBox extends SpriteComponent with CollisionCallbacks {
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    spawnTouchDownEffects(other);
+    spawnTouchDownEffects(other); // might have to await
     super.onCollision(intersectionPoints, other);
   }
 
   void resetPosition() {
-    if (skillsAnimationComponent.parent != null) {
-      // print("remove skillsAnimationComponent for $this");
-      remove(skillsAnimationComponent);
-    }
+    // if (skillsAnimationComponent!.parent != null) {
+    //   remove(skillsAnimationComponent!);
+    // }
   }
 
   void setToPassive() {
-    hitbox.collisionType = CollisionType.passive;
+    hitbox!.collisionType = CollisionType.passive;
   }
 
-  void spawnTouchDownEffects(PositionComponent other) {
-    if (hitbox.collisionType == CollisionType.active || other is BlockDeleter)
+  Future<void> spawnTouchDownEffects(PositionComponent other) async {
+    if (hitbox!.collisionType == CollisionType.passive ||
+        other is BlockDeleter) {
       return;
-    // print("spawnTouchDownEffects for $this");
-    skillsAnimationComponent = SkillsAnimationComponent(skillsArtboard);
-    add(skillsAnimationComponent);
-    skillsAnimationComponent.position = Vector2(size.x / 2, size.y / 4);
+    }
+
+    final touchEffectArtboard = await loadArtboard(
+        RiveFile.asset('assets/animations/landanimation.riv'));
+    final touchAnimation =
+        SkillsAnimationComponent(touchEffectArtboard, "touch")
+          ..anchor = customAnchor;
+    touchAnimation.position = Vector2(0, hitbox!.size.y / 4);
+    add(touchAnimation);
   }
 }

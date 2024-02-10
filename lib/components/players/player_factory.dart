@@ -16,7 +16,8 @@ class PlayerFactory {
 
     switch (randomPlayerType) {
       case 'toaster':
-        return Toaster(startingPosition: startingPosition);
+        return Toaster(
+            startingPosition: startingPosition, animationName: "toaster");
       case 'lamp':
         return Lamp(startingPosition: startingPosition);
       default:
