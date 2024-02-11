@@ -47,14 +47,15 @@ class MyPlayer extends FallingBox {
         other.parent is PlayerStack) {
       setToPassive();
       (parent!.parent as GameLoop).givePoint();
-      if (GameState.score > 1) {
-        print("Increasing by ${hitbox!.size.y}");
+      if (GameState.score > 1 &&
+          position.y < (parent!.parent as GameLoop).size.y - 300) {
         (parent!.parent as GameLoop).lowerByValue += hitbox!.size.y / 3;
       }
 
       // Offset balance on collision
       double distanceFromCenter = absolutePosition.x;
       (other.parent as PlayerStack).balanceShift += distanceFromCenter;
+      print("Balance shift: ${(other.parent as PlayerStack).balanceShift}");
 
       add(ScaleEffect.to(
         Vector2(scale.x - 0.01, scale.y - 0.05),

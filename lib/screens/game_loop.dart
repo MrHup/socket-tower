@@ -105,7 +105,7 @@ class GameLoop extends PositionComponent
     GameState.score = 0;
     scoreBoard.updateScore(GameState.score);
     playerStackComponent.balanceShift = 0;
-    playerStackComponent.angle = 0;
+    playerStackComponent.position = Vector2(size.x / 2, size.y);
   }
 
   void givePoint() {

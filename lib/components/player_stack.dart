@@ -2,6 +2,7 @@ import 'package:flame/components.dart';
 import 'package:flutter/rendering.dart';
 import 'package:socket_showdown/components/falling_box.dart';
 import 'package:socket_showdown/screens/game_loop.dart';
+import 'package:socket_showdown/static/game_state.dart';
 
 /// This is the component responsible for handling the player stack
 /// cusotom behaviour and rendering the players based on their position
@@ -14,8 +15,11 @@ class PlayerStack extends PositionComponent {
         );
 
   List<FallingBox> players = [];
-  bool rotateLeft = true;
+
+  int direction = 1;
   double balanceShift = 0;
+  final double easeDuration = 1.5;
+  double easeTime = 0;
 
   @override
   void render(Canvas canvas) {
@@ -27,22 +31,25 @@ class PlayerStack extends PositionComponent {
   @override
   void update(double dt) {
     super.update(dt);
-    rotateStack();
+    shiftStack(dt);
     anchor = Anchor.bottomCenter;
   }
 
-  void rotateStack() {
-    if (rotateLeft) {
-      angle -= balanceShift / 5000000;
-    } else {
-      angle += balanceShift / 5000000;
+  void shiftStack(double dt) {
+    if (GameState.score < 2) return;
+    double? maxOffset = balanceShift / 10 > 100 ? 100 : balanceShift / 10;
+    maxOffset = num.parse(maxOffset.toStringAsFixed(2)) as double?;
+    final Vector2 limit =
+        Vector2(size.x / 2 - maxOffset!, size.x / 2 + maxOffset);
+
+    if (position.x <= limit.x || position.x >= limit.y) {
+      direction *= -1;
+      position.x = position.x.clamp(limit.x, limit.y);
     }
 
-    if (angle <= -0.1) {
-      rotateLeft = false;
-    } else if (angle >= 0.1) {
-      rotateLeft = true;
-    }
+    double newX = position.x + direction * dt * 2 * GameState.score;
+    double newY = 0.575 * newX + 600;
+    position = Vector2(newX, newY);
   }
 
   void maintanance() {
@@ -50,7 +57,7 @@ class PlayerStack extends PositionComponent {
     for (var i = 0; i < players.length; i++) {
       players[i].parent = this;
       if (players[i].hitbox == null) {
-        continue; // TODO: experiment with break for better performance
+        break;
       }
       if (players[i].position.y >
               (parent as GameLoop).absoluteScaledSize.y +
