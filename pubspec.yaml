@@ -28,14 +28,18 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/player.png
-    - assets/images/characters/
     - assets/images/ground.png
     - assets/animations/landanimation.riv
     - assets/animations/toaster.riv
     - assets/images/crane_base.png
     - assets/images/crane_body.png
     - assets/images/logo.png
+    - assets/images/logo_blue.png
+    - assets/images/logo_red.png
     - assets/images/fog.png
+
+    - assets/images/characters/
+    - assets/images/buttons/
 
   fonts:
     - family: TitleFont

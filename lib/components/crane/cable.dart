@@ -75,7 +75,6 @@ class CraneCable extends SpriteComponent {
     player.isFalling = true;
     double offset =
         (parent as GameLoop).playerStackComponent.absolutePosition.x;
-    print(offset);
     player.position =
         Vector2(position.x - offset, position.y + absoluteScaledSize.y);
     player.parent = (parent as GameLoop).playerStackComponent;

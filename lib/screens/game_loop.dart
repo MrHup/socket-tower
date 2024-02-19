@@ -101,11 +101,12 @@ class GameLoop extends PositionComponent
         BottomDecoration(startingPosition: Vector2(size.x / 2, size.y));
     bottomDecoration.parent ??= this;
     playerStackComponent.players.add(bottomDecoration);
-    startGame();
-    GameState.score = 0;
-    scoreBoard.updateScore(GameState.score);
+
     playerStackComponent.balanceShift = 0;
     playerStackComponent.position = Vector2(size.x / 2, size.y);
+
+    // startGame();
+    game.overlays.add('replay-menu');
   }
 
   void givePoint() {
@@ -115,6 +116,8 @@ class GameLoop extends PositionComponent
   }
 
   void startGame() {
+    GameState.score = 0;
+    scoreBoard.updateScore(GameState.score);
     crane.resetPosition();
     crane.spawnBox();
   }

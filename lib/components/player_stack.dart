@@ -31,7 +31,7 @@ class PlayerStack extends PositionComponent {
   @override
   void update(double dt) {
     super.update(dt);
-    shiftStack(dt);
+    // shiftStack(dt);
     anchor = Anchor.bottomCenter;
   }
 

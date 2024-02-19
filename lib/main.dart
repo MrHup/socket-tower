@@ -3,6 +3,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_showdown/overlays/main_menu.dart';
+import 'package:socket_showdown/overlays/replay_menu.dart';
 import 'package:socket_showdown/screens/game_loop.dart';
 import 'package:socket_showdown/socket_tower.dart';
 import 'package:socket_showdown/utils/background_decoration.dart';
@@ -25,6 +26,9 @@ void main() {
             child: GestureDetector(
                 onTap: () => (game! as FlameGame).overlays.remove('test'),
                 child: const Text('Test')));
+      },
+      'replay-menu': (context, game) {
+        return ReplayMenu(game);
       },
       'tap-overlay': (context, game) {
         return GestureDetector(

@@ -53,7 +53,7 @@ class _MainMenuState extends State<MainMenu>
 
                       child: Column(
                         children: [
-                          Image.asset('assets/images/logo.png'),
+                          Image.asset('assets/images/logo_red.png'),
                           const Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Text(
