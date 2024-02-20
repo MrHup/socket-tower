@@ -2,6 +2,7 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_showdown/components/block_deleter.dart';
 import 'package:socket_showdown/components/bottom_decoration.dart';
 import 'package:socket_showdown/components/crane/cable.dart';
@@ -20,11 +21,13 @@ class GameLoop extends PositionComponent
   late BottomDecoration bottomDecoration;
   late PlayerStack playerStackComponent;
   late ScoreBoard scoreBoard;
+  late SharedPreferences preferences;
 
   double lowerByValue = 0;
 
   @override
   Future<void> onLoad() async {
+    preferences = await SharedPreferences.getInstance();
     size = Vector2(game.size.x, game.size.y);
     playerStackComponent = PlayerStack(size);
     bottomDecoration =
@@ -101,6 +104,12 @@ class GameLoop extends PositionComponent
         BottomDecoration(startingPosition: Vector2(size.x / 2, size.y));
     bottomDecoration.parent ??= this;
     playerStackComponent.players.add(bottomDecoration);
+
+    // set best score
+    if (GameState.score > GameState.bestScore) {
+      GameState.bestScore = GameState.score;
+      preferences.setInt('best', GameState.bestScore);
+    }
 
     playerStackComponent.balanceShift = 0;
     playerStackComponent.position = Vector2(size.x / 2, size.y);

@@ -16,7 +16,7 @@ class ReplayMenu extends StatefulWidget {
 }
 
 class _ReplayMenuState extends State<ReplayMenu> {
-  Widget scoreTextGroup = Padding(
+  final Widget scoreTextGroup = Padding(
     padding: const EdgeInsets.all(8.0),
     child: Column(
       children: [
@@ -34,25 +34,23 @@ class _ReplayMenuState extends State<ReplayMenu> {
     ),
   );
 
-  Widget bestScoreTextGroup(int score) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          const Text("Best",
-              style: TextStyle(
-                  fontSize: 28,
-                  fontFamily: "TitleFont",
-                  color: Color(0x50101120))),
-          Text(score.toString(),
-              style: const TextStyle(
-                  fontSize: 52,
-                  fontFamily: "TitleFont",
-                  color: Color(0xfffc8383))),
-        ],
-      ),
-    );
-  }
+  final Widget bestScoreTextGroup = Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Column(
+      children: [
+        const Text("Best",
+            style: TextStyle(
+                fontSize: 28,
+                fontFamily: "TitleFont",
+                color: Color(0x50101120))),
+        Text(GameState.bestScore.toString(),
+            style: const TextStyle(
+                fontSize: 52,
+                fontFamily: "TitleFont",
+                color: Color(0xfffc8383))),
+      ],
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +78,7 @@ class _ReplayMenuState extends State<ReplayMenu> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [scoreTextGroup, bestScoreTextGroup(121)],
+                      children: [scoreTextGroup, bestScoreTextGroup],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

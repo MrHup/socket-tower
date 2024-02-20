@@ -2,17 +2,28 @@ import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_showdown/overlays/main_menu.dart';
 import 'package:socket_showdown/overlays/replay_menu.dart';
 import 'package:socket_showdown/screens/game_loop.dart';
 import 'package:socket_showdown/socket_tower.dart';
+import 'package:socket_showdown/static/game_state.dart';
 import 'package:socket_showdown/utils/background_decoration.dart';
 
-void main() {
+void main() async {
+  // initiate flame configuration
   WidgetsFlutterBinding.ensureInitialized();
   Flame.device.fullScreen();
   Flame.device.setPortraitUpOnly();
 
+  // initiate state
+  final SharedPreferences preferences = await SharedPreferences.getInstance();
+  final int? bestScore = preferences.getInt('best');
+  if (bestScore != null) {
+    GameState.bestScore = bestScore;
+  }
+
+  // initiate game
   final game = SocketTower();
   runApp(GameWidget(
     game: kDebugMode ? SocketTower() : game,
