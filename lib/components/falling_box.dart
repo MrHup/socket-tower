@@ -90,7 +90,7 @@ class FallingBox extends PositionComponent with CollisionCallbacks {
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    spawnTouchDownEffects(other); // might have to await
+    // spawnTouchDownEffects(other); // might have to await
     super.onCollision(intersectionPoints, other);
   }
 

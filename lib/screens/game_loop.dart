@@ -87,6 +87,7 @@ class GameLoop extends PositionComponent
   }
 
   void resetGame() {
+    // shake the screen
     add(MoveByEffect(
       Vector2.all(2.4),
       EffectController(
@@ -95,6 +96,7 @@ class GameLoop extends PositionComponent
         infinite: false,
       ),
     ));
+
     for (final player in playerStackComponent.players) {
       player.removeFromParent();
     }
@@ -119,6 +121,14 @@ class GameLoop extends PositionComponent
   }
 
   void givePoint() {
+    add(MoveByEffect(
+      Vector2.all(5),
+      EffectController(
+        duration: 0.2,
+        alternate: true,
+        infinite: false,
+      ),
+    ));
     GameState.score++;
     scoreBoard.updateScore(GameState.score);
     crane.spawnBox();

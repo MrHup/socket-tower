@@ -14,7 +14,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   flame: ^1.14.0
   flame_forge2d: ^0.16.0+4
-  rive: ^0.12.4
   flame_rive: ^1.9.10
   shared_preferences: ^2.2.2
 

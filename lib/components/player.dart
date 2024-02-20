@@ -58,7 +58,7 @@ class MyPlayer extends FallingBox {
       // print("Balance shift: ${(other.parent as PlayerStack).balanceShift}");
 
       add(ScaleEffect.to(
-        Vector2(scale.x - 0.01, scale.y - 0.05),
+        Vector2(scale.x - 0.01, scale.y - 0.1),
         EffectController(
           duration: 0.1,
           alternate: true,
