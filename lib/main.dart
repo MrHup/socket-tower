@@ -1,8 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:socket_showdown/firebase_options.dart';
+import 'package:socket_showdown/overlays/leaderboard_menu.dart';
 import 'package:socket_showdown/overlays/main_menu.dart';
 import 'package:socket_showdown/overlays/replay_menu.dart';
 import 'package:socket_showdown/screens/game_loop.dart';
@@ -15,6 +18,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Flame.device.fullScreen();
   Flame.device.setPortraitUpOnly();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.web,
+  );
 
   // initiate state
   final SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -41,6 +48,9 @@ void main() async {
       'replay-menu': (context, game) {
         return ReplayMenu(game);
       },
+      'leaderboard': (context, game) {
+        return LeaderboardMenu(game);
+      },
       'tap-overlay': (context, game) {
         return GestureDetector(
           onTapDown: (details) =>
@@ -58,7 +68,7 @@ void main() async {
         );
       },
     },
-    initialActiveOverlays: const ['tap-overlay', 'menu'],
+    initialActiveOverlays: const ['tap-overlay', 'leaderboard'],
     backgroundBuilder: (context) {
       return Stack(
         children: [

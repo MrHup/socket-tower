@@ -16,6 +16,8 @@ dependencies:
   flame_forge2d: ^0.16.0+4
   flame_rive: ^1.9.10
   shared_preferences: ^2.2.2
+  firebase_core: ^2.24.2
+  firebase_database: ^10.4.0
 
 dev_dependencies:
   flutter_test:
