@@ -3,7 +3,7 @@ import 'dart:convert';
 class LeaderboardEntry {
   final String userId;
   final String username;
-  final int score;
+  int score;
 
   LeaderboardEntry({
     required this.userId,

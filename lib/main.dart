@@ -12,6 +12,7 @@ import 'package:socket_showdown/screens/game_loop.dart';
 import 'package:socket_showdown/socket_tower.dart';
 import 'package:socket_showdown/static/game_state.dart';
 import 'package:socket_showdown/utils/background_decoration.dart';
+import 'package:socket_showdown/utils/random_string_generator.dart';
 
 void main() async {
   // initiate flame configuration
@@ -28,6 +29,22 @@ void main() async {
   final int? bestScore = preferences.getInt('best');
   if (bestScore != null) {
     GameState.bestScore = bestScore;
+  }
+
+  final String? userIdentifier = preferences.getString('userIdentifier');
+  if (userIdentifier != null) {
+    GameState.userIdentifier = userIdentifier;
+  } else {
+    GameState.userIdentifier = getRandomString(12);
+    preferences.setString('userIdentifier', GameState.userIdentifier);
+  }
+
+  final String? userName = preferences.getString('userName');
+  if (userName != null) {
+    GameState.userName = userName;
+  } else {
+    GameState.userName = 'Anon-' + getRandomString(6);
+    preferences.setString('userName', GameState.userName);
   }
 
   // initiate game
@@ -68,7 +85,7 @@ void main() async {
         );
       },
     },
-    initialActiveOverlays: const ['tap-overlay', 'leaderboard'],
+    initialActiveOverlays: const ['tap-overlay', 'menu'],
     backgroundBuilder: (context) {
       return Stack(
         children: [
