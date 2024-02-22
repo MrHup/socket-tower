@@ -25,8 +25,8 @@
      inkscape:deskcolor="#505050"
      inkscape:document-units="mm"
      inkscape:zoom="1"
-     inkscape:cx="1128.5"
-     inkscape:cy="1464.4999"
+     inkscape:cx="532.5"
+     inkscape:cy="426.5"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="1912"
@@ -3746,10 +3746,10 @@
        style="color-interpolation-filters:sRGB;"
        inkscape:label="Drop Shadow"
        id="filter176"
-       x="-0.993346"
-       y="-0.600766"
-       width="2.986692"
-       height="2.201532"><feFlood
+       x="-0.17232122"
+       y="-0.13515202"
+       width="1.3446424"
+       height="1.1889254"><feFlood
          result="flood"
          in="SourceGraphic"
          flood-opacity="0.670588"
@@ -10885,7 +10885,7 @@
          clip-path="url(#clipPath75-9-9)"
          transform="translate(0.12862346,0.05846521)" /></g><g
        id="g59-7-11-5-3"
-       transform="matrix(1.3899296,0,0,1.3899296,407.20186,-34.591356)"
+       transform="matrix(1.3899296,0,0,1.3899296,395.56019,-35.914273)"
        inkscape:export-filename="images\characters\toaster.png"
        inkscape:export-xdpi="144"
        inkscape:export-ydpi="144"><g
@@ -11070,8 +11070,8 @@
            id="path6-6-9-5-8-3-0-4-0-2-2"
            sodipodi:nodetypes="ccccc" /></g></g><g
        id="g7095-5-7"
-       transform="matrix(1.5194862,0,0,1.5194862,-150.60418,-132.27861)"
-       inkscape:export-filename="images\characters\lamp.png"
+       transform="matrix(1.5194862,0,0,1.5194862,-159.33543,-129.36819)"
+       inkscape:export-filename="..\..\..\..\Users\Flavius\Desktop\icon.png"
        inkscape:export-xdpi="144"
        inkscape:export-ydpi="144"><path
          style="fill:#ffc51e;fill-opacity:1;stroke:none;stroke-width:6.49134;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.8;stroke-opacity:1;paint-order:stroke fill markers"
@@ -11949,7 +11949,7 @@
          clip-path="url(#clipPath75-6-8-0-5)"
          transform="translate(0.12862346,0.05846521)" /></g><g
        id="g169"
-       transform="matrix(0.71609547,0,0,0.71609547,42.287943,14.867046)"
+       transform="matrix(0.71609547,0,0,0.71609547,36.202526,14.337879)"
        inkscape:export-filename="images\characters\tibi.png"
        inkscape:export-xdpi="144"
        inkscape:export-ydpi="144"><g
@@ -12874,7 +12874,7 @@
          x="17.759542"
          y="214.50806">2</tspan></text><path
        style="fill:#f8e312;fill-opacity:0.786585;stroke-width:5.77373;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
-       d="m -11.137709,212.66183 -2.041193,-3.40199 2.126253,-0.38272 -0.807988,-3.31692 2.9767426,4.38005 -2.0901486,0.56004 z"
+       d="m 18.760208,206.841 -2.041193,-3.40199 2.126253,-0.38272 -0.807988,-3.31692 2.976742,4.38005 -2.090148,0.56004 z"
        id="path19-7-9-4-3-6-4-0-8-0-3"
        inkscape:export-filename="images\thunder_icon.png"
        inkscape:export-xdpi="144"

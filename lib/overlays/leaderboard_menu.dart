@@ -6,6 +6,7 @@ import 'package:socket_showdown/overlays/utils/leaderboard_title.dart';
 import 'package:socket_showdown/static/game_state.dart';
 import 'package:socket_showdown/static/leaderboard_entry.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:socket_showdown/static/sound_player.dart';
 
 // ignore: must_be_immutable
 class LeaderboardMenu extends StatefulWidget {
@@ -175,6 +176,7 @@ class _LeaderboardMenuState extends State<LeaderboardMenu> {
                 onPressed: () {
                   (widget.game as FlameGame).overlays.remove('leaderboard');
                   (widget.game as FlameGame).overlays.add('replay-menu');
+                  SoundPlayer.playDrop();
                 },
                 landScape: true,
               ),

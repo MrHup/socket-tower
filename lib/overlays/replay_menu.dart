@@ -4,6 +4,7 @@ import 'package:socket_showdown/overlays/utils/hover_image.dart';
 import 'package:socket_showdown/screens/game_loop.dart';
 import 'package:socket_showdown/socket_tower.dart';
 import 'package:socket_showdown/static/game_state.dart';
+import 'package:socket_showdown/static/sound_player.dart';
 
 // ignore: must_be_immutable
 class ReplayMenu extends StatefulWidget {
@@ -103,6 +104,7 @@ class _ReplayMenuState extends State<ReplayMenu> {
                             (widget.game as FlameGame)
                                 .overlays
                                 .add('leaderboard');
+                            SoundPlayer.playDrop();
                           },
                         ),
                         HoverImage(
@@ -115,6 +117,7 @@ class _ReplayMenuState extends State<ReplayMenu> {
                             ((widget.game as SocketTower).world.children.first
                                     as GameLoop)
                                 .startGame();
+                            SoundPlayer.playDrop();
                           },
                           landScape: true,
                         ),

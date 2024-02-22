@@ -119,6 +119,7 @@ class GameLoop extends PositionComponent
 
     // startGame();
     game.overlays.add('replay-menu');
+    SoundPlayer.playSmash();
   }
 
   void givePoint() {
@@ -133,7 +134,7 @@ class GameLoop extends PositionComponent
     GameState.score++;
     scoreBoard.updateScore(GameState.score);
     crane.spawnBox();
-    SoundPlayer.playTouch();
+    SoundPlayer.playKey();
   }
 
   void startGame() {

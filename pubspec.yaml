@@ -47,6 +47,8 @@ flutter:
     - assets/audio/bg_sound.wav
     - assets/audio/drop.mp3
     - assets/audio/touch.mp3
+    - assets/audio/smash.wav
+    - assets/audio/key.wav
 
   fonts:
     - family: TitleFont
