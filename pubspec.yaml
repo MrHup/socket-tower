@@ -18,6 +18,7 @@ dependencies:
   shared_preferences: ^2.2.2
   firebase_core: ^2.24.2
   cloud_firestore: ^4.14.0
+  flame_audio: ^2.1.8
 
 dev_dependencies:
   flutter_test:
@@ -42,6 +43,10 @@ flutter:
 
     - assets/images/characters/
     - assets/images/buttons/
+  
+    - assets/audio/bg_sound.wav
+    - assets/audio/drop.mp3
+    - assets/audio/touch.mp3
 
   fonts:
     - family: TitleFont

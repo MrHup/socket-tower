@@ -12,7 +12,7 @@ import 'package:socket_showdown/components/score_board.dart';
 import 'package:socket_showdown/socket_tower.dart';
 import 'package:socket_showdown/static/constants.dart';
 import 'package:socket_showdown/static/game_state.dart';
-import 'package:socket_showdown/utils/logger.dart';
+import 'package:socket_showdown/static/sound_player.dart';
 
 class GameLoop extends PositionComponent
     with TapCallbacks, HasCollisionDetection, HasGameReference<SocketTower> {
@@ -27,6 +27,7 @@ class GameLoop extends PositionComponent
 
   @override
   Future<void> onLoad() async {
+    print("GAME LOOP LOADED");
     preferences = await SharedPreferences.getInstance();
     size = Vector2(game.size.x, game.size.y);
     playerStackComponent = PlayerStack(size);
@@ -46,19 +47,19 @@ class GameLoop extends PositionComponent
     add(BlockDeleter(
         collisionBoxPosition: Vector2(0, 3 * size.y),
         collisionBoxSize: Vector2(size.x * 3, 200)));
+
+    SoundPlayer.loadPool();
   }
 
   @override
-  void onTapDown(TapDownEvent event) {
-    debugLog("Main game tap at ${event.localPosition}");
-    if (crane.enabled) {
-      crane.dropBox();
-    }
+  void onRemove() {
+    SoundPlayer.dispose();
   }
 
   void tapDown() {
     if (crane.enabled) {
       crane.dropBox();
+      SoundPlayer.playDrop();
     }
   }
 
@@ -132,6 +133,7 @@ class GameLoop extends PositionComponent
     GameState.score++;
     scoreBoard.updateScore(GameState.score);
     crane.spawnBox();
+    SoundPlayer.playTouch();
   }
 
   void startGame() {
@@ -139,5 +141,6 @@ class GameLoop extends PositionComponent
     scoreBoard.updateScore(GameState.score);
     crane.resetPosition();
     crane.spawnBox();
+    SoundPlayer.startBgMusic();
   }
 }
