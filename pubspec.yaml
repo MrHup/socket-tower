@@ -19,6 +19,8 @@ dependencies:
   firebase_core: ^2.24.2
   cloud_firestore: ^4.14.0
   flame_audio: ^2.1.8
+  carousel_slider: ^4.2.1
+  im_stepper: ^1.0.1+1
 
 dev_dependencies:
   flutter_test:
@@ -43,6 +45,7 @@ flutter:
 
     - assets/images/characters/
     - assets/images/buttons/
+    - assets/images/cards/
   
     - assets/audio/bg_sound.wav
     - assets/audio/drop.mp3

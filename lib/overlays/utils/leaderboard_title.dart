@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class LeaderboardTitle extends StatelessWidget {
-  const LeaderboardTitle({super.key});
+  const LeaderboardTitle({this.title = "Leaderboard", super.key});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +13,7 @@ class LeaderboardTitle extends StatelessWidget {
         children: <Widget>[
           // Stroked text as border.
           Text(
-            'Leaderboard',
+            title,
             style: TextStyle(
               fontSize: 25,
               fontFamily: 'TitleFont',
@@ -22,9 +24,9 @@ class LeaderboardTitle extends StatelessWidget {
             ),
           ),
           // Solid text as fill.
-          const Text(
-            'Leaderboard',
-            style: TextStyle(
+          Text(
+            title,
+            style: const TextStyle(
               fontFamily: 'TitleFont',
               fontSize: 25,
               color: Colors.white,

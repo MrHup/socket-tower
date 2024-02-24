@@ -90,7 +90,15 @@ class _ReplayMenuState extends State<ReplayMenu> {
                               'assets/images/buttons/collection_up.png',
                           hoverImage:
                               'assets/images/buttons/collection_down.png',
-                          onPressed: () {},
+                          onPressed: () {
+                            (widget.game as FlameGame)
+                                .overlays
+                                .remove('replay-menu');
+                            (widget.game as FlameGame)
+                                .overlays
+                                .add('collections');
+                            SoundPlayer.playDrop();
+                          },
                         ),
                         HoverImage(
                           normalImage:

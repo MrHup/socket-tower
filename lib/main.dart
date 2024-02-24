@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_showdown/firebase_options.dart';
+import 'package:socket_showdown/overlays/collection_menu.dart';
 import 'package:socket_showdown/overlays/leaderboard_menu.dart';
 import 'package:socket_showdown/overlays/main_menu.dart';
 import 'package:socket_showdown/overlays/replay_menu.dart';
@@ -67,6 +68,9 @@ void main() async {
       },
       'leaderboard': (context, game) {
         return LeaderboardMenu(game);
+      },
+      'collections': (context, game) {
+        return CollectionMenu(game);
       },
       'tap-overlay': (context, game) {
         return GestureDetector(
