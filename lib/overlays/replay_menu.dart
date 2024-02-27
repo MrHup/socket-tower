@@ -122,6 +122,9 @@ class _ReplayMenuState extends State<ReplayMenu> {
                             (widget.game as FlameGame)
                                 .overlays
                                 .remove('replay-menu');
+                            (widget.game as FlameGame)
+                                .overlays
+                                .add('pause-overlay');
                             ((widget.game as SocketTower).world.children.first
                                     as GameLoop)
                                 .startGame();

@@ -119,6 +119,7 @@ class GameLoop extends PositionComponent
 
     // startGame();
     game.overlays.add('replay-menu');
+    game.overlays.remove('pause-overlay');
     SoundPlayer.playSmash();
   }
 

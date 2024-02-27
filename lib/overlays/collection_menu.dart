@@ -26,7 +26,7 @@ class _CollectionMenuState extends State<CollectionMenu> {
   Widget build(BuildContext context) {
     int bestScore = GameState.bestScore;
     List<Image> images = [
-      bestScore > (walletObjects[0]["score"] as int)
+      bestScore >= (walletObjects[0]["score"] as int)
           ? Image.asset(walletObjects[0]["img_path"] as String)
           : Image.asset("assets/images/cards/unknown_card.png"),
       bestScore > (walletObjects[1]["score"] as int)

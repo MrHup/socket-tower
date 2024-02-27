@@ -133,7 +133,7 @@ class _LeaderboardMenuState extends State<LeaderboardMenu> {
                         const LeaderboardTitle(),
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(16.0),
                             child: FutureBuilder<List<LeaderboardRow>>(
                               future:
                                   sortLeaderBoardEntries(), // Replace with your actual method to fetch leaderboard entries

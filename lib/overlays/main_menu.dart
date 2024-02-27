@@ -1,6 +1,5 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:socket_showdown/screens/game_loop.dart';
 import 'package:socket_showdown/socket_tower.dart';
 
@@ -77,6 +76,8 @@ class _MainMenuState extends State<MainMenu>
       ),
       onTap: () {
         (widget.game as FlameGame).overlays.remove('menu');
+        (widget.game as FlameGame).overlays.remove('utilities-overlay');
+        (widget.game as SocketTower).overlays.add('pause-overlay');
         ((widget.game as SocketTower).world.children.first as GameLoop)
             .startGame();
         // (widget.game as SocketTower).overlays.add('tap-overlay');
