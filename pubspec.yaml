@@ -21,6 +21,7 @@ dependencies:
   flame_audio: ^2.1.8
   carousel_slider: ^4.2.1
   im_stepper: ^1.0.1+1
+  url_launcher: ^6.2.5
 
 dev_dependencies:
   flutter_test:

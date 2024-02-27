@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:im_stepper/stepper.dart';
 import 'package:socket_showdown/overlays/utils/hover_image.dart';
 import 'package:socket_showdown/overlays/utils/leaderboard_title.dart';
+import 'package:socket_showdown/overlays/utils/smart_button.dart';
+import 'package:socket_showdown/static/game_state.dart';
 import 'package:socket_showdown/static/sound_player.dart';
+import 'package:socket_showdown/static/wallet.dart';
 
 // ignore: must_be_immutable
 class CollectionMenu extends StatefulWidget {
@@ -17,17 +20,25 @@ class CollectionMenu extends StatefulWidget {
 }
 
 class _CollectionMenuState extends State<CollectionMenu> {
-  List<Widget> valuesWidget = [
-    Image.asset("assets/images/cards/lamp_card.png"),
-    Image.asset("assets/images/cards/tv_card.png"),
-    Image.asset("assets/images/cards/toaster_card.png"),
-    Image.asset("assets/images/cards/unknown_card.png"),
-  ];
-
   int _current = 0;
 
   @override
   Widget build(BuildContext context) {
+    int bestScore = GameState.bestScore;
+    List<Image> images = [
+      bestScore > (walletObjects[0]["score"] as int)
+          ? Image.asset(walletObjects[0]["img_path"] as String)
+          : Image.asset("assets/images/cards/unknown_card.png"),
+      bestScore > (walletObjects[1]["score"] as int)
+          ? Image.asset(walletObjects[1]["img_path"] as String)
+          : Image.asset("assets/images/cards/unknown_card.png"),
+      bestScore > (walletObjects[2]["score"] as int)
+          ? Image.asset(walletObjects[2]["img_path"] as String)
+          : Image.asset("assets/images/cards/unknown_card.png"),
+      bestScore > (walletObjects[3]["score"] as int)
+          ? Image.asset(walletObjects[3]["img_path"] as String)
+          : Image.asset("assets/images/cards/unknown_card.png"),
+    ];
     return Container(
       color: const Color.fromARGB(127, 0, 0, 0),
       child: Center(
@@ -54,10 +65,10 @@ class _CollectionMenuState extends State<CollectionMenu> {
                         const SizedBox(height: 60),
                         const LeaderboardTitle(title: "Collection"),
                         CarouselSlider(
-                          items: valuesWidget,
+                          items: images,
                           options: CarouselOptions(
                             autoPlay: true,
-                            aspectRatio: 1,
+                            aspectRatio: 1.05,
                             onPageChanged: (index, reason) {
                               setState(() {
                                 _current = index;
@@ -65,27 +76,22 @@ class _CollectionMenuState extends State<CollectionMenu> {
                             },
                           ),
                         ),
-                        HoverImage(
-                          normalImage:
-                              'assets/images/buttons/google_wallet.png',
-                          hoverImage: 'assets/images/buttons/google_wallet.png',
-                          onPressed: () {
-                            setState(() {
-                              _current = (_current + 1) % valuesWidget.length;
-                            });
-                          },
-                          landScape: true,
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: DotStepper(
+                              shape: Shape.rectangle,
+                              activeStep: _current,
+                              dotCount: images.length,
+                              dotRadius: 6,
+                              tappingEnabled: false,
+                              spacing: 8,
+                              fixedDotDecoration: const FixedDotDecoration(
+                                color: Color.fromARGB(57, 33, 149, 243),
+                              ),
+                              indicatorDecoration: const IndicatorDecoration(
+                                  color: Colors.blue, strokeWidth: 0)),
                         ),
-                        DotStepper(
-                            activeStep: _current,
-                            dotCount: valuesWidget.length,
-                            dotRadius: 6,
-                            spacing: 8,
-                            fixedDotDecoration: const FixedDotDecoration(
-                              color: Color.fromARGB(57, 33, 149, 243),
-                            ),
-                            indicatorDecoration: const IndicatorDecoration(
-                                color: Colors.blue, strokeWidth: 0)),
+                        SmartButton(_current),
                         // image button
                       ],
                     ),
@@ -95,22 +101,25 @@ class _CollectionMenuState extends State<CollectionMenu> {
                   top: -50, // Adjust this value according to your preference
                   child: Image.asset("assets/images/logo_blue.png"),
                 ),
+                Positioned(
+                  bottom: -20,
+                  child: Material(
+                    color: Colors.transparent,
+                    child: HoverImage(
+                      normalImage: 'assets/images/buttons/back_up.png',
+                      hoverImage: 'assets/images/buttons/back_down.png',
+                      onPressed: () {
+                        (widget.game as FlameGame)
+                            .overlays
+                            .remove('collections');
+                        (widget.game as FlameGame).overlays.add('replay-menu');
+                        SoundPlayer.playDrop();
+                      },
+                      landScape: true,
+                    ),
+                  ),
+                ),
               ],
-            ),
-
-            // back button
-            Material(
-              color: Colors.transparent,
-              child: HoverImage(
-                normalImage: 'assets/images/buttons/back_up.png',
-                hoverImage: 'assets/images/buttons/back_down.png',
-                onPressed: () {
-                  (widget.game as FlameGame).overlays.remove('collections');
-                  (widget.game as FlameGame).overlays.add('replay-menu');
-                  SoundPlayer.playDrop();
-                },
-                landScape: true,
-              ),
             ),
           ],
         ),
