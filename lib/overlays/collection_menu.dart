@@ -29,14 +29,17 @@ class _CollectionMenuState extends State<CollectionMenu> {
       bestScore >= (walletObjects[0]["score"] as int)
           ? Image.asset(walletObjects[0]["img_path"] as String)
           : Image.asset("assets/images/cards/unknown_card.png"),
-      bestScore > (walletObjects[1]["score"] as int)
+      bestScore >= (walletObjects[1]["score"] as int)
           ? Image.asset(walletObjects[1]["img_path"] as String)
           : Image.asset("assets/images/cards/unknown_card.png"),
-      bestScore > (walletObjects[2]["score"] as int)
+      bestScore >= (walletObjects[2]["score"] as int)
           ? Image.asset(walletObjects[2]["img_path"] as String)
           : Image.asset("assets/images/cards/unknown_card.png"),
-      bestScore > (walletObjects[3]["score"] as int)
+      bestScore >= (walletObjects[3]["score"] as int)
           ? Image.asset(walletObjects[3]["img_path"] as String)
+          : Image.asset("assets/images/cards/unknown_card.png"),
+      bestScore >= (walletObjects[4]["score"] as int)
+          ? Image.asset(walletObjects[4]["img_path"] as String)
           : Image.asset("assets/images/cards/unknown_card.png"),
     ];
     return Container(
