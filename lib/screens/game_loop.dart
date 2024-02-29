@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_showdown/components/block_deleter.dart';
 import 'package:socket_showdown/components/bottom_decoration.dart';
 import 'package:socket_showdown/components/crane/cable.dart';
+import 'package:socket_showdown/components/fading_text.dart';
 import 'package:socket_showdown/components/player.dart';
 import 'package:socket_showdown/components/player_stack.dart';
 import 'package:socket_showdown/components/score_board.dart';
@@ -27,7 +28,6 @@ class GameLoop extends PositionComponent
 
   @override
   Future<void> onLoad() async {
-    print("GAME LOOP LOADED");
     preferences = await SharedPreferences.getInstance();
     size = Vector2(game.size.x, game.size.y);
     playerStackComponent = PlayerStack(size);
@@ -118,7 +118,12 @@ class GameLoop extends PositionComponent
     playerStackComponent.position = Vector2(size.x / 2, size.y);
 
     // startGame();
-    game.overlays.add('replay-menu');
+    print("Game reset ${GameState.score}");
+    if (GameState.score >= 3) {
+      game.overlays.add('summary');
+    } else {
+      game.overlays.add('replay-menu');
+    }
     game.overlays.remove('pause-overlay');
     SoundPlayer.playSmash();
   }
@@ -134,12 +139,22 @@ class GameLoop extends PositionComponent
     ));
     GameState.score++;
     scoreBoard.updateScore(GameState.score);
+
+    final Vector2 topPosition =
+        playerStackComponent.players.last.position - Vector2(0, 0);
+    final fadingText =
+        FadingText(wattage: crane.currentWattage, newPosition: topPosition);
+
+    add(fadingText);
+
     crane.spawnBox();
+
     SoundPlayer.playKey();
   }
 
   void startGame() {
     GameState.score = 0;
+    GameState.totalWattage = 0;
     scoreBoard.updateScore(GameState.score);
     crane.resetPosition();
     crane.spawnBox();

@@ -45,10 +45,6 @@ class CurvePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Paint grayPaint = Paint()
-      ..color = Color(0xFF555f75)
-      ..style = PaintingStyle.fill;
-
     final Color color2 = Color.fromARGB(183, 19, 165, 255);
     final Color color1 = Color.fromARGB(166, 42, 173, 255);
 
@@ -68,12 +64,18 @@ class CurvePainter extends CustomPainter {
       canvas.drawPath(blue, bluePaint);
     }
 
-    Path path = Path();
-    path.moveTo(0, size.height - size.width / 1.732);
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, size.height);
-    path.close();
-    canvas.drawPath(path, grayPaint);
+    if (size.width < size.height) {
+      Paint grayPaint = Paint()
+        ..color = Color(0xFF555f75)
+        ..style = PaintingStyle.fill;
+
+      Path path = Path();
+      path.moveTo(0, size.height - size.width / 1.732);
+      path.lineTo(size.width, size.height);
+      path.lineTo(0, size.height);
+      path.close();
+      canvas.drawPath(path, grayPaint);
+    }
   }
 
   @override

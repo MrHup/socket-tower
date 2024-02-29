@@ -7,6 +7,7 @@ class Tibi extends MyPlayer {
     required startingPosition,
     animationName,
   }) : super(
+          wattage: 500,
           imgPath: 'characters/tibi.png',
           startingPosition: startingPosition,
           collisionBox: Vector2(201, 136),

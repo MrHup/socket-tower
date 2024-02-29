@@ -7,6 +7,7 @@ class Lamp extends MyPlayer {
     required startingPosition,
     animationName,
   }) : super(
+          wattage: 60,
           imgPath: 'characters/lamp.png',
           startingPosition: startingPosition,
           collisionBox: Vector2(201, 136),

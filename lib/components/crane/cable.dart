@@ -22,6 +22,8 @@ class CraneCable extends SpriteComponent {
   bool enabled = false;
   late MyPlayer player;
 
+  int currentWattage = 0;
+
   @override
   Future<void> onLoad() async {
     sprite = await Sprite.load("crane_body.png");
@@ -89,6 +91,8 @@ class CraneCable extends SpriteComponent {
     player.isFalling = false;
     player.parent = this;
     player.anchor = Anchor.topLeft;
+
+    currentWattage = player.wattage;
   }
 
   void resetPosition() {

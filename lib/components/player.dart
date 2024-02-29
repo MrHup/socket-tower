@@ -11,6 +11,7 @@ import 'package:socket_showdown/static/game_state.dart';
 
 class MyPlayer extends FallingBox {
   MyPlayer({
+    required this.wattage,
     required imgPath,
     required startingPosition,
     required collisionBox,
@@ -23,6 +24,8 @@ class MyPlayer extends FallingBox {
             positionCollisionBox: positionCollisionBox,
             animationName: animationName,
             customAnchor: Anchor.topCenter);
+
+  int wattage;
   @override
   void render(Canvas c) {
     if (Constants.SHOW_COLLISION_BOX) {

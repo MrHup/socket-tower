@@ -7,6 +7,7 @@ class Toaster extends MyPlayer {
     required startingPosition,
     animationName,
   }) : super(
+          wattage: 1200,
           imgPath: 'characters/toaster.png',
           startingPosition: startingPosition,
           collisionBox: Vector2(201, 125),

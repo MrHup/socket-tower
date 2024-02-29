@@ -22,6 +22,7 @@ dependencies:
   carousel_slider: ^4.2.1
   im_stepper: ^1.0.1+1
   url_launcher: ^6.2.5
+  lottie: ^3.1.0
 
 dev_dependencies:
   flutter_test:
@@ -37,12 +38,14 @@ flutter:
     - assets/images/ground.png
     - assets/animations/landanimation.riv
     - assets/animations/toaster.riv
+    - assets/animations/bell_animation.json
     - assets/images/crane_base.png
     - assets/images/crane_body.png
     - assets/images/logo.png
     - assets/images/logo_blue.png
     - assets/images/logo_red.png
     - assets/images/fog.png
+    - assets/images/thunder_icon.png
 
     - assets/images/characters/
     - assets/images/buttons/

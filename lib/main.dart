@@ -9,6 +9,7 @@ import 'package:socket_showdown/overlays/collection_menu.dart';
 import 'package:socket_showdown/overlays/leaderboard_menu.dart';
 import 'package:socket_showdown/overlays/main_menu.dart';
 import 'package:socket_showdown/overlays/replay_menu.dart';
+import 'package:socket_showdown/overlays/summary_menu.dart';
 import 'package:socket_showdown/overlays/utils/hover_image.dart';
 import 'package:socket_showdown/screens/game_loop.dart';
 import 'package:socket_showdown/socket_tower.dart';
@@ -67,6 +68,9 @@ void main() async {
       },
       'replay-menu': (context, game) {
         return ReplayMenu(game);
+      },
+      'summary': (context, game) {
+        return SummaryMenu(game);
       },
       'leaderboard': (context, game) {
         return LeaderboardMenu(game);
