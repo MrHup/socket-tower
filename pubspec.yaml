@@ -36,7 +36,6 @@ flutter:
   assets:
     - assets/images/player.png
     - assets/images/ground.png
-    - assets/animations/landanimation.riv
     - assets/animations/toaster.riv
     - assets/animations/bell_animation.json
     - assets/images/crane_base.png
@@ -54,8 +53,8 @@ flutter:
     - assets/audio/bg_sound.wav
     - assets/audio/drop.mp3
     - assets/audio/touch.mp3
-    - assets/audio/smash.wav
-    - assets/audio/key.wav
+    - assets/audio/smash.mp3
+    - assets/audio/key.mp3
 
   fonts:
     - family: TitleFont

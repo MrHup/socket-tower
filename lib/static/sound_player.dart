@@ -15,11 +15,11 @@ class SoundPlayer {
       maxPlayers: 4,
     );
     poolSmash = await FlameAudio.createPool(
-      'smash.wav',
+      'smash.mp3',
       maxPlayers: 4,
     );
     poolKey = await FlameAudio.createPool(
-      'key.wav',
+      'key.mp3',
       maxPlayers: 4,
     );
   }

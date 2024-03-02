@@ -1,4 +1,3 @@
-import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/events.dart';
@@ -14,13 +13,6 @@ class SocketTower extends FlameGame {
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    // camera.viewport = FixedResolutionViewport(
-    //   resolution: Vector2(400, 700),
-    // );
-    // camera.viewport.add(SpriteComponent(
-    //   sprite: await loadSprite('logo.png'),
-    //   scale: Vector2.all(0.5),
-    // ));
   }
 }
 

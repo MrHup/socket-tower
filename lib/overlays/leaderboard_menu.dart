@@ -100,7 +100,8 @@ class _LeaderboardMenuState extends State<LeaderboardMenu> {
       rows.add(LeaderboardRow(
           place: entries.indexOf(entry) + 1,
           score: entry.score,
-          name: entry.username));
+          name: entry.username,
+          isCurrentUser: GameState.userIdentifier == entry.userId));
     }
     return rows;
   }

@@ -1,10 +1,12 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/flame.dart';
 import 'package:flame_rive/flame_rive.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as material;
 import 'package:socket_showdown/components/animation_template.dart';
 import 'package:socket_showdown/components/block_deleter.dart';
 import 'package:socket_showdown/static/constants.dart';
+import 'package:socket_showdown/static/game_state.dart';
 
 class FallingBox extends PositionComponent with CollisionCallbacks {
   FallingBox(
@@ -25,7 +27,7 @@ class FallingBox extends PositionComponent with CollisionCallbacks {
   Vector2 positionCollisionBox;
   bool isFalling;
 
-  final _defaultColor = Color.fromARGB(135, 255, 86, 86);
+  final _defaultColor = material.Color.fromARGB(135, 255, 86, 86);
   ShapeHitbox? hitbox;
 
   int id = 0;
@@ -44,22 +46,23 @@ class FallingBox extends PositionComponent with CollisionCallbacks {
     anchor = customAnchor;
 
     if (animationName != null) {
-      final boxArtboard = await loadArtboard(
-          RiveFile.asset('assets/animations/$animationName.riv'));
-      final boxAnimation = SkillsAnimationComponent(boxArtboard, animationName!)
+      GameState.artboard ??=
+          await loadArtboard(RiveFile.asset('assets/animations/toaster.riv'));
+      final boxAnimation = SkillsAnimationComponent(animationName!)
         ..anchor = customAnchor;
       add(boxAnimation);
     } else {
       // spawn sprite instead of animation
+      final img = await Flame.images.load(imgPath);
       final sprite = SpriteComponent()
-        ..sprite = await Sprite.load(imgPath)
+        ..sprite = Sprite(img)
         ..anchor = customAnchor;
       add(sprite);
     }
 
-    final defaultPaint = Paint()
+    final defaultPaint = material.Paint()
       ..color = _defaultColor
-      ..style = PaintingStyle.fill;
+      ..style = material.PaintingStyle.fill;
 
     // make parallelogram hitbox
     Vector2 startingPos = positionCollisionBox;
@@ -109,12 +112,8 @@ class FallingBox extends PositionComponent with CollisionCallbacks {
         other is BlockDeleter) {
       return;
     }
-
-    final touchEffectArtboard = await loadArtboard(
-        RiveFile.asset('assets/animations/landanimation.riv'));
-    final touchAnimation =
-        SkillsAnimationComponent(touchEffectArtboard, "touch")
-          ..anchor = customAnchor;
+    final touchAnimation = SkillsAnimationComponent("touch")
+      ..anchor = customAnchor;
     touchAnimation.position = Vector2(0, hitbox!.size.y / 4);
     add(touchAnimation);
   }
