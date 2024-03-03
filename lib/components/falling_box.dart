@@ -2,11 +2,10 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame_rive/flame_rive.dart';
-import 'package:flutter/material.dart' as material;
+import 'package:flutter/material.dart';
 import 'package:socket_showdown/components/animation_template.dart';
 import 'package:socket_showdown/components/block_deleter.dart';
 import 'package:socket_showdown/static/constants.dart';
-import 'package:socket_showdown/static/game_state.dart';
 
 class FallingBox extends PositionComponent with CollisionCallbacks {
   FallingBox(
@@ -27,7 +26,7 @@ class FallingBox extends PositionComponent with CollisionCallbacks {
   Vector2 positionCollisionBox;
   bool isFalling;
 
-  final _defaultColor = material.Color.fromARGB(135, 255, 86, 86);
+  final _defaultColor = Color.fromARGB(135, 255, 86, 86);
   ShapeHitbox? hitbox;
 
   int id = 0;
@@ -46,9 +45,9 @@ class FallingBox extends PositionComponent with CollisionCallbacks {
     anchor = customAnchor;
 
     if (animationName != null) {
-      GameState.artboard ??=
-          await loadArtboard(RiveFile.asset('assets/animations/toaster.riv'));
-      final boxAnimation = SkillsAnimationComponent(animationName!)
+      final boxArtboard = await loadArtboard(
+          RiveFile.asset('assets/animations/$animationName.riv'));
+      final boxAnimation = SkillsAnimationComponent(boxArtboard, animationName!)
         ..anchor = customAnchor;
       add(boxAnimation);
     } else {
@@ -60,9 +59,9 @@ class FallingBox extends PositionComponent with CollisionCallbacks {
       add(sprite);
     }
 
-    final defaultPaint = material.Paint()
+    final defaultPaint = Paint()
       ..color = _defaultColor
-      ..style = material.PaintingStyle.fill;
+      ..style = PaintingStyle.fill;
 
     // make parallelogram hitbox
     Vector2 startingPos = positionCollisionBox;
@@ -112,8 +111,12 @@ class FallingBox extends PositionComponent with CollisionCallbacks {
         other is BlockDeleter) {
       return;
     }
-    final touchAnimation = SkillsAnimationComponent("touch")
-      ..anchor = customAnchor;
+
+    final touchEffectArtboard = await loadArtboard(
+        RiveFile.asset('assets/animations/landanimation.riv'));
+    final touchAnimation =
+        SkillsAnimationComponent(touchEffectArtboard, "touch")
+          ..anchor = customAnchor;
     touchAnimation.position = Vector2(0, hitbox!.size.y / 4);
     add(touchAnimation);
   }
