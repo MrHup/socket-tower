@@ -114,7 +114,8 @@ class GameLoop extends PositionComponent
       preferences.setInt('best', GameState.bestScore);
     }
 
-    playerStackComponent.balanceShift = 0;
+    playerStackComponent.balanceShiftX = 0;
+    playerStackComponent.balanceShiftY = 0;
     playerStackComponent.position = Vector2(size.x / 2, size.y);
 
     // startGame();

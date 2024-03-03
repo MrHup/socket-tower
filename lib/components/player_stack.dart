@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flame/components.dart';
+import 'package:flame/game.dart';
 import 'package:flutter/rendering.dart';
 import 'package:socket_showdown/components/falling_box.dart';
 import 'package:socket_showdown/screens/game_loop.dart';
@@ -17,7 +20,7 @@ class PlayerStack extends PositionComponent {
   List<FallingBox> players = [];
 
   int direction = 1;
-  double balanceShift = 0;
+  double balanceShiftX = 0, balanceShiftY = 0;
   final double easeDuration = 1.5;
   double easeTime = 0;
 
@@ -31,25 +34,33 @@ class PlayerStack extends PositionComponent {
   @override
   void update(double dt) {
     super.update(dt);
-    // shiftStack(dt);
+    shiftStack(dt);
     anchor = Anchor.bottomCenter;
   }
 
   void shiftStack(double dt) {
-    if (GameState.score < 2) return;
-    double? maxOffset = balanceShift / 10 > 100 ? 100 : balanceShift / 10;
+    if (players.length < 2) return;
+
+    double? maxOffset = size.x / 2 - GameState.score * 10;
+    if (maxOffset < 0) {
+      maxOffset = 0;
+    }
+
     maxOffset = num.parse(maxOffset.toStringAsFixed(2)) as double?;
-    final Vector2 limit =
-        Vector2(size.x / 2 - maxOffset!, size.x / 2 + maxOffset);
+    final Vector2 limit = Vector2(0 + maxOffset!, size.x - maxOffset);
 
     if (position.x <= limit.x || position.x >= limit.y) {
       direction *= -1;
       position.x = position.x.clamp(limit.x, limit.y);
     }
 
-    double newX = position.x + direction * dt * 2 * GameState.score;
-    double newY = 0.575 * newX + 600;
+    int exponent = GameState.score > 13 ? 13 : GameState.score;
+    double newX = position.x + direction * dt * 2 * pow(1.4, exponent);
+    double newY = 0.575 * newX + 585;
     position = Vector2(newX, newY);
+
+    balanceShiftX = size.x / 2 - position.x;
+    balanceShiftY = size.y - position.y;
   }
 
   void maintanance() {

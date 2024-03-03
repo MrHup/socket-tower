@@ -53,9 +53,13 @@ class _SummaryMenuState extends State<SummaryMenu> {
   String getConclusionText() {
     final int totalWattage = GameState.totalWattage;
     if (totalWattage < 10000) {
-      return "Just these house appliances consume in one hour as much electricity as ${totalWattage / 10} LED light bulbs. Do not leave your toasters on!";
+      final double bulbs = totalWattage / 10;
+      final String bulbsString = bulbs.toStringAsFixed(2);
+      return "Just these house appliances consume in one hour as much electricity as $bulbsString LED light bulbs. Do not leave your toasters on!";
     }
-    return "In one hour, your tower consumes as much electricity as charging your phone ${totalWattage / 15} times. Do not leave your toasters on!";
+    final double phones = totalWattage / 15;
+    final String phonesString = phones.toStringAsFixed(2);
+    return "In one hour, your tower consumes as much electricity as charging your phone $phonesString times. Do not leave your toasters on!";
   }
 
   @override
